@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:todo_nti5/core/customized_widgets/customized_button.dart';
 import 'package:todo_nti5/core/customized_widgets/customized_text_field.dart';
 
+import '../../../core/customized_widgets/customized_auth_text.dart';
 import '../../../core/resources/app_assets.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -34,6 +36,10 @@ class LoginScreen extends StatelessWidget {
             prefixIcon: AppIcons.passwordIcon,
             isPassword: true,
           ),
+          SizedBox(height: 23.h),
+          CustomizedButton(),
+          SizedBox(height: 23.h),
+          CustomizedAuthText(prompt: "Don't have account?", title: "Register",),
         ],
       ),
     );
