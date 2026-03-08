@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:todo_nti5/core/customized_widgets/customized_button.dart';
-import 'package:todo_nti5/core/customized_widgets/customized_text_field.dart';
+import 'package:todo_nti5/features/auth/login/login_screen.dart';
 
 import '../../../core/customized_widgets/customized_auth_text.dart';
+import '../../../core/customized_widgets/customized_button.dart';
+import '../../../core/customized_widgets/customized_text_field.dart';
 import '../../../core/resources/app_assets.dart';
-import '../../home/home_screen.dart';
-import '../register/register_screen.dart';
 
-class LoginScreen extends StatelessWidget {
-  static final String routeName = "/login";
-
-  const LoginScreen({super.key});
+class RegisterScreen extends StatelessWidget {
+  static final String routeName = "/register";
+  const RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,24 +36,22 @@ class LoginScreen extends StatelessWidget {
             prefixIcon: AppIcons.passwordIcon,
             isPassword: true,
           ),
-          SizedBox(height: 23.h),
-          InkWell(
-            onTap: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => const HomeScreen()),
-              );
-            },
-            child: CustomizedButton(title: "Login"),
+          SizedBox(height: 10.h),
+          CustomizedTextField(
+            hintText: "Confirm Password",
+            prefixIcon: AppIcons.passwordIcon,
+            isPassword: true,
           ),
           SizedBox(height: 23.h),
+          CustomizedButton(title: "Register",),
+          SizedBox(height: 23.h),
           InkWell(
             onTap: () {
-              Navigator.pushNamed(context, RegisterScreen.routeName);
+              Navigator.pushNamed(context, LoginScreen.routeName);
             },
             child: CustomizedAuthText(
-              prompt: "Don't have account?",
-              title: "Register",
+              prompt: "Already have an account?",
+              title: "Login",
             ),
           ),
         ],

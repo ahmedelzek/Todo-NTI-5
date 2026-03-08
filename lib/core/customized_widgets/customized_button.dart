@@ -3,7 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo_nti5/core/resources/app_colors.dart';
 
 class CustomizedButton extends StatelessWidget {
-  const CustomizedButton({super.key});
+  final String title;
+  const CustomizedButton({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +26,9 @@ class CustomizedButton extends StatelessWidget {
         ]
       ),
       child: Text(
-        "Login",
+        title,
         style: TextStyle(
-          color: AppColors.white,
+          color: AppColors.transparentGreen,
           fontSize: 19.sp,
           fontWeight: FontWeight.w300,
         ),
