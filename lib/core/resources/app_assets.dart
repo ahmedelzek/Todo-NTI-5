@@ -8,4 +8,8 @@ abstract class AppImages {
 
 abstract class AppIcons {
   static final String baseIconsPath = "assets/icons";
+  static final String profileIcon = "$baseIconsPath/profile_icon.svg";
+  static final String passwordIcon = "$baseIconsPath/password_icon.svg";
+  static final String lockIcon = "$baseIconsPath/lock_icon.svg";
+  static final String unlockIcon = "$baseIconsPath/unlock_icon.svg";
 }
