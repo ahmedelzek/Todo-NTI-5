@@ -8,6 +8,7 @@ abstract class AppColors {
   static final Color white = Color(0xffFFFFFF);
   static final Color black = Color(0xff000000);
   static final Color grey = Color(0xff6E6A7C);
+  static final Color lightGrey = Color(0xffCDCDCD);
   static final Color backgroundColor = Color(0xffF3F5F4);
   static final Color red = Color(0xffE4312B);
 }
