@@ -63,7 +63,7 @@ class _CustomizedTextFieldState extends State<CustomizedTextField> {
               : null,
           hintText: widget.hintText,
         ),
-        style: TextStyleManger.bodyMediumText(),
+        style: AppTextStyles.bodyMediumText(),
       ),
     );
   }

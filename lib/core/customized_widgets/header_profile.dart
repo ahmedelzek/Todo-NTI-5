@@ -28,8 +28,8 @@ class HeaderProfile extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Hello!", style: TextStyleManger.bodySmallLightText(),),
-              Text("Ahmad Adel", style: TextStyleManger.bodyMediumText(),)
+              Text("Hello!", style: AppTextStyles.bodySmallLightText(),),
+              Text("Ahmad Adel", style: AppTextStyles.bodyMediumText(),)
             ],
           )
         ],

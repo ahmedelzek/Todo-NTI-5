@@ -16,7 +16,7 @@ class EmptyTasksPrompt extends StatelessWidget {
           child: Text(
             "There are no tasks yet, Press the button To add New Task",
             textAlign: TextAlign.center,
-            style: TextStyleManger.bodyLargeText()
+            style: AppTextStyles.bodyLargeText()
           ),
         ),
         SizedBox(height: 40.h),

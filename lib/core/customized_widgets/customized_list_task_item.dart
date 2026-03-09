@@ -5,14 +5,25 @@ import 'package:todo_nti5/core/resources/text_styles.dart';
 import '../resources/app_colors.dart';
 
 class CustomizedListTaskItem extends StatelessWidget {
-  const CustomizedListTaskItem({super.key});
+  final String title;
+  final String description;
+  final String date;
+  final String time;
+
+  const CustomizedListTaskItem({
+    super.key,
+    required this.title,
+    required this.description,
+    required this.date,
+    required this.time,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 90.h,
       width: double.infinity,
-      margin: EdgeInsets.symmetric(horizontal: 20.w),
+      margin: EdgeInsets.symmetric(horizontal: 20.w , vertical: 10.h),
       decoration: BoxDecoration(
         color: AppColors.transparentGreen,
         borderRadius: BorderRadius.circular(20.r),
@@ -25,8 +36,8 @@ class CustomizedListTaskItem extends StatelessWidget {
           ),
         ],
       ),
-      child: Container(
-        margin: EdgeInsets.all(10.r),
+      child: Padding(
+        padding: EdgeInsets.all(10.r),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -34,23 +45,20 @@ class CustomizedListTaskItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text(title, style: AppTextStyles.bodySmallLightText()),
                 Text(
-                  "Task Title",
-                  style: TextStyleManger.bodySmallLightText(),
-                ),
-                Text(
-                  "11/03/2025\n05:00 PM",
+                  "$date\n$time",
                   textAlign: TextAlign.center,
-                  style: TextStyleManger.bodySmallLightText(),
+                  style: AppTextStyles.bodySmallLightText(),
                 ),
               ],
             ),
             Expanded(
               child: Text(
-                "Improve my English skills\n by trying to speak",
-                style: TextStyleManger.bodyMediumText(),
+                description,
+                style: AppTextStyles.bodyMediumText(),
               ),
-            )
+            ),
           ],
         ),
       ),
