@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:todo_nti5/core/resources/text_styles.dart';
 
 import '../resources/app_assets.dart';
 import '../resources/app_colors.dart';
@@ -62,6 +63,7 @@ class _CustomizedTextFieldState extends State<CustomizedTextField> {
               : null,
           hintText: widget.hintText,
         ),
+        style: TextStyleManger.bodyMediumText(),
       ),
     );
   }

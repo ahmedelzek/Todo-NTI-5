@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo_nti5/core/resources/app_assets.dart';
-
-import '../resources/app_colors.dart';
+import 'package:todo_nti5/core/resources/text_styles.dart';
 
 class EmptyTasksPrompt extends StatelessWidget {
   const EmptyTasksPrompt({super.key});
@@ -15,13 +14,9 @@ class EmptyTasksPrompt extends StatelessWidget {
         Container(
           margin: EdgeInsets.symmetric(horizontal: 96.w),
           child: Text(
-            "There are no tasks yet,Press the buttonTo add New Task",
+            "There are no tasks yet, Press the button To add New Task",
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AppColors.grey,
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w200,
-            ),
+            style: TextStyleManger.bodyLargeText()
           ),
         ),
         SizedBox(height: 40.h),

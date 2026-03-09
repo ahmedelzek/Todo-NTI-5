@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo_nti5/core/resources/app_colors.dart';
+import 'package:todo_nti5/core/resources/text_styles.dart';
 
 class CustomizedButton extends StatelessWidget {
   final String title;
@@ -27,11 +28,7 @@ class CustomizedButton extends StatelessWidget {
       ),
       child: Text(
         title,
-        style: TextStyle(
-          color: AppColors.transparentGreen,
-          fontSize: 19.sp,
-          fontWeight: FontWeight.w300,
-        ),
+        style: TextStyleManger.buttonTextStyle(),
       ),
     );
   }
