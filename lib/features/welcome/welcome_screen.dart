@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:todo_nti5/core/resources/text_styles.dart';
 
 import '../../core/customized_widgets/customized_button.dart';
 import '../../core/resources/app_assets.dart';
@@ -30,21 +31,13 @@ class WelcomeScreen extends StatelessWidget {
           Text(
             "Welcome To\n Do It !",
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AppColors.black,
-              fontSize: 24.sp,
-              fontWeight: FontWeight.w400,
-            ),
+            style: TextStyleManger.largeTitleText(),
           ),
           SizedBox(height: 40.h),
           Text(
             "Ready to conquer your tasks? Let's Do It together.",
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AppColors.grey,
-              fontSize: 16.sp,
-              fontWeight: FontWeight.w400,
-            ),
+            style: TextStyleManger.bodyLargeLightText(),
           ),
           SizedBox(height: 55.h),
           InkWell(

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo_nti5/core/resources/app_assets.dart';
 import 'package:todo_nti5/core/resources/app_colors.dart';
+import 'package:todo_nti5/core/resources/text_styles.dart';
 
 class HeaderProfile extends StatelessWidget {
   const HeaderProfile({super.key});
@@ -27,16 +28,8 @@ class HeaderProfile extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Hello!", style: TextStyle(
-                color: AppColors.black,
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w300,
-              ),),
-              Text("Ahmad Adel", style: TextStyle(
-                color: AppColors.black,
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w400,
-              ))
+              Text("Hello!", style: TextStyleManger.bodySmallLightText(),),
+              Text("Ahmad Adel", style: TextStyleManger.bodyMediumText(),)
             ],
           )
         ],

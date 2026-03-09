@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:todo_nti5/core/resources/text_styles.dart';
 
 import '../resources/app_colors.dart';
 
@@ -35,31 +36,19 @@ class CustomizedListTaskItem extends StatelessWidget {
               children: [
                 Text(
                   "Task Title",
-                  style: TextStyle(
-                    color: AppColors.grey,
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w400,
-                  ),
+                  style: TextStyleManger.bodySmallLightText(),
                 ),
                 Text(
                   "11/03/2025\n05:00 PM",
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: AppColors.grey,
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w400,
-                  ),
+                  style: TextStyleManger.bodySmallLightText(),
                 ),
               ],
             ),
             Expanded(
               child: Text(
                 "Improve my English skills\n by trying to speak",
-                style: TextStyle(
-                  color: AppColors.black,
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w300,
-                ),
+                style: TextStyleManger.bodyMediumText(),
               ),
             )
           ],
