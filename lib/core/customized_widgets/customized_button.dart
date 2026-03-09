@@ -28,7 +28,7 @@ class CustomizedButton extends StatelessWidget {
       ),
       child: Text(
         title,
-        style: TextStyleManger.buttonTextStyle(),
+        style: AppTextStyles.buttonTextStyle(),
       ),
     );
   }

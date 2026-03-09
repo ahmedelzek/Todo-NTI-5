@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'app_colors.dart';
 
-abstract class TextStyleManger {
+abstract class AppTextStyles {
   static TextStyle bodySmallLightText() {
     return TextStyle(
       color: AppColors.grey,

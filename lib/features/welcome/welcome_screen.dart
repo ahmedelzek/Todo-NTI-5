@@ -31,13 +31,13 @@ class WelcomeScreen extends StatelessWidget {
           Text(
             "Welcome To\n Do It !",
             textAlign: TextAlign.center,
-            style: TextStyleManger.largeTitleText(),
+            style: AppTextStyles.largeTitleText(),
           ),
           SizedBox(height: 40.h),
           Text(
             "Ready to conquer your tasks? Let's Do It together.",
             textAlign: TextAlign.center,
-            style: TextStyleManger.bodyLargeLightText(),
+            style: AppTextStyles.bodyLargeLightText(),
           ),
           SizedBox(height: 55.h),
           InkWell(

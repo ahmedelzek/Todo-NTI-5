@@ -18,9 +18,9 @@ class CustomizedAuthText extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(prompt, style: TextStyleManger.bodyMediumLightText()),
+        Text(prompt, style: AppTextStyles.bodyMediumLightText()),
         SizedBox(width: 15.w),
-        Text(title, style: TextStyleManger.bodyMediumBoldText()),
+        Text(title, style: AppTextStyles.bodyMediumBoldText()),
       ],
     );
   }
