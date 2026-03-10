@@ -5,6 +5,10 @@ abstract class AppTheme{
   static ThemeData lightTheme = ThemeData(
     colorSchemeSeed: Colors.green,
     scaffoldBackgroundColor: AppColors.backgroundColor,
+    appBarTheme: AppBarTheme(
+      color: AppColors.backgroundColor,
+      centerTitle: true,
+    ),
     useMaterial3: true,
     fontFamily: 'LexendDeca',
     inputDecorationTheme: InputDecorationTheme(

@@ -13,4 +13,5 @@ abstract class AppIcons {
   static final String lockIcon = "$baseIconsPath/lock_icon.svg";
   static final String unlockIcon = "$baseIconsPath/unlock_icon.svg";
   static final String addIcon = "$baseIconsPath/add_icon.svg";
+  static final String settingIcon = "$baseIconsPath/setting_icon.svg";
 }
