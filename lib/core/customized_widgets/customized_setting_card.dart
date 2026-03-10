@@ -7,7 +7,10 @@ import '../resources/app_assets.dart';
 import '../resources/app_colors.dart';
 
 class CustomizedSettingCard extends StatelessWidget {
-  const CustomizedSettingCard({super.key});
+  final String? title;
+  final String? icon;
+
+  const CustomizedSettingCard({super.key, required this.title, required this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +26,11 @@ class CustomizedSettingCard extends StatelessWidget {
       child: Row(
         children: [
           SvgPicture.asset(
-            AppIcons.profileIcon,
+            icon?? AppIcons.profileIcon,
             width: 24.w,
             height: 24.h,),
           SizedBox(width: 16.w,),
-          Text("Profile", style: AppTextStyles.bodyLargeText(),),
+          Text(title??"", style: AppTextStyles.bodyLargeText(),),
           Spacer(),
           Icon(Icons.arrow_forward_ios, color: AppColors.grey,)
         ],

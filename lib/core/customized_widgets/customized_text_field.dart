@@ -11,11 +11,10 @@ class CustomizedTextField extends StatefulWidget {
   final String? prefixIcon;
   final bool isPassword;
 
-
   const CustomizedTextField({
     super.key,
     required this.hintText,
-    required this.prefixIcon,
+    this.prefixIcon,
     this.isPassword = false,
   });
 
@@ -24,17 +23,18 @@ class CustomizedTextField extends StatefulWidget {
 }
 
 class _CustomizedTextFieldState extends State<CustomizedTextField> {
-
   late bool _obscureText;
+
   @override
   void initState() {
     super.initState();
     _obscureText = widget.isPassword;
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 20.h),
+      padding: EdgeInsets.all(20.r),
       margin: EdgeInsets.symmetric(horizontal: 23.w),
       width: double.infinity,
       height: 63.h,
@@ -46,21 +46,29 @@ class _CustomizedTextFieldState extends State<CustomizedTextField> {
       child: TextFormField(
         obscureText: _obscureText,
         decoration: InputDecoration(
-          prefixIcon: SvgPicture.asset(widget.prefixIcon!, width: 24.w, height: 24.h),
-          suffixIcon: widget.isPassword
-              ? GestureDetector(
-            onTap: () {
-              setState(() {
-                _obscureText = !_obscureText;
-              });
-            },
-            child: SvgPicture.asset(
-              _obscureText ? AppIcons.lockIcon : AppIcons.unlockIcon,
-              width: 24.w,
-              height: 24.h,
-            ),
-          )
-              : null,
+          prefixIcon:
+              widget.prefixIcon != null
+                  ? SvgPicture.asset(
+                    widget.prefixIcon!,
+                    width: 24.w,
+                    height: 24.h,
+                  )
+                  : null,
+          suffixIcon:
+              widget.isPassword
+                  ? GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _obscureText = !_obscureText;
+                      });
+                    },
+                    child: SvgPicture.asset(
+                      _obscureText ? AppIcons.lockIcon : AppIcons.unlockIcon,
+                      width: 24.w,
+                      height: 24.h,
+                    ),
+                  )
+                  : null,
           hintText: widget.hintText,
         ),
         style: AppTextStyles.bodyMediumText(),
