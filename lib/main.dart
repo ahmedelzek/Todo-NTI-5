@@ -8,6 +8,7 @@ import 'package:todo_nti5/features/welcome/welcome_screen.dart';
 import 'features/auth/register/register_screen.dart';
 import 'features/home/home_screen.dart';
 import 'features/profile/chande_password/change_password_screen.dart';
+import 'features/profile/settings/settings_screen.dart';
 import 'features/profile/update_profile/update_profile_screen.dart';
 import 'features/splash/splash_screen.dart';
 
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
           ProfileScreen.routeName: (context) => const ProfileScreen(),
           UpdateProfileScreen.routeName: (context) => const UpdateProfileScreen(),
           ChangePasswordScreen.routeName: (context) => const ChangePasswordScreen(),
+          SettingsScreen.routeName: (context) => const SettingsScreen(),
         },
       ),
     );

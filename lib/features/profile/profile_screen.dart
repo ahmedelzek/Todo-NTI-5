@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_nti5/core/customized_widgets/header_profile.dart';
+import 'package:todo_nti5/features/profile/settings/settings_screen.dart';
 import 'package:todo_nti5/features/profile/update_profile/update_profile_screen.dart';
 
 import '../../core/customized_widgets/customized_setting_card.dart';
@@ -37,6 +38,9 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
             InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, SettingsScreen.routeName);
+              },
               child: CustomizedSettingCard(
                 title: "Settings",
                 icon: AppIcons.settingIcon,
