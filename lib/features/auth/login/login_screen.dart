@@ -16,49 +16,51 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20.r),
-            child: Image.asset(
-              AppImages.authImage,
-              width: 375.w,
-              height: 298.h,
-              fit: BoxFit.cover,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20.r),
+              child: Image.asset(
+                AppImages.authImage,
+                width: 375.w,
+                height: 298.h,
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          SizedBox(height: 23.h),
-          CustomizedTextField(
-            hintText: "Username",
-            prefixIcon: AppIcons.profileIcon,
-          ),
-          SizedBox(height: 10.h),
-          CustomizedTextField(
-            hintText: "Password",
-            prefixIcon: AppIcons.passwordIcon,
-            isPassword: true,
-          ),
-          SizedBox(height: 23.h),
-          InkWell(
-            onTap: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => const HomeScreen()),
-              );
-            },
-            child: CustomizedButton(title: "Login"),
-          ),
-          SizedBox(height: 23.h),
-          InkWell(
-            onTap: () {
-              Navigator.pushNamed(context, RegisterScreen.routeName);
-            },
-            child: CustomizedAuthText(
-              prompt: "Don't have account?",
-              title: "Register",
+            SizedBox(height: 23.h),
+            CustomizedTextField(
+              hintText: "Username",
+              prefixIcon: AppIcons.profileIcon,
             ),
-          ),
-        ],
+            SizedBox(height: 10.h),
+            CustomizedTextField(
+              hintText: "Password",
+              prefixIcon: AppIcons.passwordIcon,
+              isPassword: true,
+            ),
+            SizedBox(height: 23.h),
+            InkWell(
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const HomeScreen()),
+                );
+              },
+              child: CustomizedButton(title: "Login"),
+            ),
+            SizedBox(height: 23.h),
+            InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, RegisterScreen.routeName);
+              },
+              child: CustomizedAuthText(
+                prompt: "Don't have account?",
+                title: "Register",
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
