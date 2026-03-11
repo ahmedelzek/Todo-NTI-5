@@ -34,7 +34,7 @@ class _CustomizedTextFieldState extends State<CustomizedTextField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(20.r),
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
       margin: EdgeInsets.symmetric(horizontal: 23.w),
       width: double.infinity,
       height: 63.h,
