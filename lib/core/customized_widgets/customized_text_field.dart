@@ -10,12 +10,14 @@ class CustomizedTextField extends StatefulWidget {
   final String? hintText;
   final String? prefixIcon;
   final bool isPassword;
+  final bool isDescription;
 
   const CustomizedTextField({
     super.key,
     required this.hintText,
     this.prefixIcon,
     this.isPassword = false,
+    this.isDescription = false,
   });
 
   @override
@@ -34,10 +36,13 @@ class _CustomizedTextFieldState extends State<CustomizedTextField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
+      padding: EdgeInsets.symmetric(
+        horizontal: 16.w,
+        vertical: widget.isDescription ? 8.h : 20.h,
+      ),
       margin: EdgeInsets.symmetric(horizontal: 23.w),
       width: double.infinity,
-      height: 63.h,
+      height: widget.isDescription ? null : 63.h,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.r),
         color: AppColors.white,
@@ -45,6 +50,9 @@ class _CustomizedTextFieldState extends State<CustomizedTextField> {
       ),
       child: TextFormField(
         obscureText: _obscureText,
+        minLines: 1,
+        maxLines: widget.isDescription ? null : 1,
+        keyboardType: TextInputType.multiline,
         decoration: InputDecoration(
           prefixIcon:
               widget.prefixIcon != null

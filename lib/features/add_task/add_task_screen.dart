@@ -23,28 +23,30 @@ class AddTaskScreen extends StatelessWidget {
           icon: Icon(Icons.arrow_back_ios_new),
         ),
       ),
-      body: Column(
-        children: [
-          SizedBox(height: 40.h),
-          Center(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20.r),
-              child: Image.asset(AppImages.authImage, fit: BoxFit.cover,
-                  width: 261.w,
-                  height: 207.h),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(height: 40.h),
+            Center(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20.r),
+                child: Image.asset(AppImages.authImage, fit: BoxFit.cover,
+                    width: 261.w,
+                    height: 207.h),
+              ),
             ),
-          ),
-          SizedBox(height: 23.h),
-          CustomizedTextField(hintText: "Title",),
-          SizedBox(height: 10.h),
-          CustomizedTextField(hintText: "Description",),
-          SizedBox(height: 10.h),
-          CustomizedGroupSpinnerField(),
-          SizedBox(height: 10.h),
-          CustomizedTextField(hintText: "Date", prefixIcon: AppIcons.calendarIcon),
-          SizedBox(height: 10.h),
-          CustomizedButton(title: "Add Task")
-        ],
+            SizedBox(height: 23.h),
+            CustomizedTextField(hintText: "Title",),
+            SizedBox(height: 10.h),
+            CustomizedTextField(hintText: "Description", isDescription: true,),
+            SizedBox(height: 10.h),
+            CustomizedGroupSpinnerField(),
+            SizedBox(height: 10.h),
+            CustomizedTextField(hintText: "Date", prefixIcon: AppIcons.calendarIcon),
+            SizedBox(height: 10.h),
+            CustomizedButton(title: "Add Task")
+          ],
+        ),
       ),
     );
   }
