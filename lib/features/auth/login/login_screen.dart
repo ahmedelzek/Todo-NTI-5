@@ -42,10 +42,7 @@ class LoginScreen extends StatelessWidget {
             SizedBox(height: 23.h),
             InkWell(
               onTap: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const HomeScreen()),
-                );
+                Navigator.pushReplacementNamed(context, HomeScreen.routeName);
               },
               child: CustomizedButton(title: "Login"),
             ),
