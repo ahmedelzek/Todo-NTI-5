@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:todo_nti5/core/customized_widgets/customized_tasks_counter.dart';
+import 'package:todo_nti5/core/resources/text_styles.dart';
 
+import '../../core/customized_widgets/customized_gourps_card.dart';
 import '../../core/customized_widgets/customized_home_tasks_card.dart';
 import '../../core/customized_widgets/customized_task_item.dart';
 import '../../core/customized_widgets/header_profile.dart';
@@ -23,11 +26,11 @@ class HomeScreen extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 20.h,
             children: [
               HeaderProfile(),
-              SizedBox(height: 20.h),
               CustomizedHomeTasksCard(),
-              SizedBox(height: 20.h),
+              customizedTasksCounter(title: "In Progress", count: 5),
               SizedBox(
                 height: 110.h,
                 child: ListView.builder(
@@ -36,12 +39,26 @@ class HomeScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: EdgeInsets.only(right: 10.w),
-                      child: CustomizedTaskItem(
-                        taskModel: demoTasks[index],
-                      ),
+                      child: CustomizedTaskItem(taskModel: demoTasks[index]),
                     );
                   },
                 ),
+              ),
+              Text("Tasks Group", style: AppTextStyles.bodyMediumText()),
+              CustomizedGroupsCard(title: "Home Tasks", count: 5),
+              CustomizedGroupsCard(
+                title: "Personal Tasks",
+                count: 5,
+                icon: AppIcons.personalIcon,
+                color: AppColors.green,
+                backgroundColor: AppColors.transparentGreen,
+              ),
+              CustomizedGroupsCard(
+                title: "Work Tasks",
+                count: 5,
+                icon: AppIcons.workIcon,
+                color: AppColors.white,
+                backgroundColor: AppColors.black,
               ),
             ],
           ),
