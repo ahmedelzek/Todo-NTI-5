@@ -8,7 +8,7 @@ import 'package:todo_nti5/features/welcome/welcome_screen.dart';
 import 'features/add_task/add_task_screen.dart';
 import 'features/auth/register/register_screen.dart';
 import 'features/home/home_screen.dart';
-import 'features/home/tasks_by_type_screen.dart';
+import 'features/home/tasks_by_type/tasks_by_type_screen.dart';
 import 'features/profile/chande_password/change_password_screen.dart';
 import 'features/profile/settings/settings_screen.dart';
 import 'features/profile/update_profile/update_profile_screen.dart';

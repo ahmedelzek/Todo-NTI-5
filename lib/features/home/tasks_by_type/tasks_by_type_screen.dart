@@ -8,9 +8,9 @@ import 'package:todo_nti5/core/customized_widgets/header_profile.dart';
 import 'package:todo_nti5/core/resources/app_assets.dart';
 import 'package:todo_nti5/core/resources/text_styles.dart';
 
-import '../../core/demo_data/demo_tasks_data.dart';
-import '../../core/resources/app_colors.dart';
-import '../add_task/add_task_screen.dart';
+import '../../../core/demo_data/demo_tasks_data.dart';
+import '../../../core/resources/app_colors.dart';
+import '../../add_task/add_task_screen.dart';
 
 class TasksByTypeScreen extends StatelessWidget {
   static final String routeName = "/home";
