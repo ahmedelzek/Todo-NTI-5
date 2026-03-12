@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:todo_nti5/core/customized_widgets/customized_tasks_counter.dart';
+import 'package:todo_nti5/core/customized_widgets/empty_tasks_prompt.dart';
 import 'package:todo_nti5/core/resources/text_styles.dart';
 
 import '../../core/customized_widgets/customized_gourps_card.dart';
@@ -17,6 +18,7 @@ class HomeScreen extends StatelessWidget {
   static final String routeName = "/updatedHome";
 
   const HomeScreen({super.key});
+  bool get hasTasks => demoTasks.isNotEmpty;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class HomeScreen extends StatelessWidget {
       child: Scaffold(
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: Column(
+          child: hasTasks ? Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             spacing: 20.h,
             children: [
@@ -61,7 +63,12 @@ class HomeScreen extends StatelessWidget {
                 backgroundColor: AppColors.black,
               ),
             ],
-          ),
+          ): Column(
+            children: [
+              HeaderProfile(),
+              Expanded(child: EmptyTasksPrompt())
+            ],
+          )
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
