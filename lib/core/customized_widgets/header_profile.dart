@@ -10,7 +10,7 @@ class HeaderProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+      margin: EdgeInsets.symmetric(vertical: 20.h),
       child: Row(
         children: [
           Container(

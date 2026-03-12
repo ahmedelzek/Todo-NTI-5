@@ -7,15 +7,15 @@ abstract class AppImages {
 }
 
 abstract class AppIcons {
-  static final String baseIconsPath = "assets/icons";
-  static final String profileIcon = "$baseIconsPath/profile_icon.svg";
-  static final String passwordIcon = "$baseIconsPath/password_icon.svg";
-  static final String lockIcon = "$baseIconsPath/lock_icon.svg";
-  static final String unlockIcon = "$baseIconsPath/unlock_icon.svg";
-  static final String addIcon = "$baseIconsPath/add_icon.svg";
-  static final String settingIcon = "$baseIconsPath/setting_icon.svg";
-  static final String workIcon = "$baseIconsPath/work_icon.svg";
-  static final String personalIcon = "$baseIconsPath/personal_icon.svg";
-  static final String homeIcon = "$baseIconsPath/home_icon.svg";
-  static final String calendarIcon = "$baseIconsPath/calendar_icon.svg";
+  static const String baseIconsPath = "assets/icons";
+  static const String profileIcon = "$baseIconsPath/profile_icon.svg";
+  static const String passwordIcon = "$baseIconsPath/password_icon.svg";
+  static const String lockIcon = "$baseIconsPath/lock_icon.svg";
+  static const String unlockIcon = "$baseIconsPath/unlock_icon.svg";
+  static const String addIcon = "$baseIconsPath/add_icon.svg";
+  static const String settingIcon = "$baseIconsPath/setting_icon.svg";
+  static const String workIcon = "$baseIconsPath/work_icon.svg";
+  static const String personalIcon = "$baseIconsPath/personal_icon.svg";
+  static const String homeIcon = "$baseIconsPath/home_icon.svg";
+  static const String calendarIcon = "$baseIconsPath/calendar_icon.svg";
 }
