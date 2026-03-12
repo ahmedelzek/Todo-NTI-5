@@ -7,6 +7,7 @@ import 'package:todo_nti5/features/welcome/welcome_screen.dart';
 
 import 'features/add_task/add_task_screen.dart';
 import 'features/auth/register/register_screen.dart';
+import 'features/edit_task/edit_task_screen.dart';
 import 'features/home/home_screen.dart';
 import 'features/home/tasks_by_type/tasks_by_type_screen.dart';
 import 'features/profile/chande_password/change_password_screen.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Todo',
         theme: AppTheme.lightTheme,
-        initialRoute: HomeScreen.routeName,
+        initialRoute: EditTaskScreen.routeName,
         routes: {
           LoginScreen.routeName: (context) => const LoginScreen(),
           RegisterScreen.routeName: (context) => const RegisterScreen(),
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
           SettingsScreen.routeName: (context) => const SettingsScreen(),
           AddTaskScreen.routeName: (context) => const AddTaskScreen(),
           TasksByTypeScreen.routeName: (context) => const TasksByTypeScreen(),
+          EditTaskScreen.routeName: (context) => const EditTaskScreen(),
         },
       ),
     );

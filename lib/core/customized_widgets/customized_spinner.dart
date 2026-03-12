@@ -40,7 +40,6 @@ class _CustomizedGroupSpinnerFieldState
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 23.w),
       height: 63.h,
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 12),

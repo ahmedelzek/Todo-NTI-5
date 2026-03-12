@@ -18,4 +18,6 @@ abstract class AppIcons {
   static const String personalIcon = "$baseIconsPath/personal_icon.svg";
   static const String homeIcon = "$baseIconsPath/home_icon.svg";
   static const String calendarIcon = "$baseIconsPath/calendar_icon.svg";
+  static const String deleteIcon = "$baseIconsPath/delete_icon.svg";
+
 }

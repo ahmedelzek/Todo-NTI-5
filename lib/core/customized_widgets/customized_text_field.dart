@@ -40,7 +40,6 @@ class _CustomizedTextFieldState extends State<CustomizedTextField> {
         horizontal: 16.w,
         vertical: widget.isDescription ? 8.h : 20.h,
       ),
-      margin: EdgeInsets.symmetric(horizontal: 23.w),
       width: double.infinity,
       height: widget.isDescription ? null : 63.h,
       decoration: BoxDecoration(

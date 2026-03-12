@@ -10,7 +10,6 @@ class CustomizedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Container(
-      margin: EdgeInsets.symmetric(horizontal: 23.w),
       height: 50.h,
       width: double.infinity,
       alignment: Alignment.center,
