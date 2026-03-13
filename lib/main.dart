@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Todo',
         theme: AppTheme.lightTheme,
-        initialRoute: EditTaskScreen.routeName,
+        initialRoute: SplashScreen.routeName,
         routes: {
           LoginScreen.routeName: (context) => const LoginScreen(),
           RegisterScreen.routeName: (context) => const RegisterScreen(),

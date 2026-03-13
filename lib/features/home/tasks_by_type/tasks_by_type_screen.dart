@@ -21,32 +21,35 @@ class TasksByTypeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Column(
-          children: [
-            HeaderProfile(),
-            Visibility(
-              visible: demoTasks.isNotEmpty,
-              child: customizedTasksCounter(title: "Tasks", count: 7)
-            ),
-            Expanded(
-              child:
-                  demoTasks.isEmpty
-                      ? EmptyTasksPrompt()
-                      : ListView.builder(
-                        itemCount: demoTasks.length,
-                        itemBuilder: (context, index) {
-                          final task = demoTasks[index];
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          child: Column(
+            children: [
+              HeaderProfile(),
+              Visibility(
+                visible: demoTasks.isNotEmpty,
+                child: customizedTasksCounter(title: "Tasks", count: 7)
+              ),
+              Expanded(
+                child:
+                    demoTasks.isEmpty
+                        ? EmptyTasksPrompt()
+                        : ListView.builder(
+                          itemCount: demoTasks.length,
+                          itemBuilder: (context, index) {
+                            final task = demoTasks[index];
 
-                          return CustomizedListTaskItem(
-                            title: task.title,
-                            description: task.description,
-                            date: task.date,
-                            time: task.time,
-                          );
-                        },
-                      ),
-            ),
-          ],
+                            return CustomizedListTaskItem(
+                              title: task.title,
+                              description: task.description,
+                              date: task.date,
+                              time: task.time,
+                            );
+                          },
+                        ),
+              ),
+            ],
+          ),
         ),
       ),
     );

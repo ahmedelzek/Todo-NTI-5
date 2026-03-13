@@ -23,7 +23,7 @@ class CustomizedListTaskItem extends StatelessWidget {
     return Container(
       height: 90.h,
       width: double.infinity,
-      margin: EdgeInsets.symmetric(horizontal: 20.w , vertical: 10.h),
+      margin: EdgeInsets.symmetric( vertical: 10.h),
       decoration: BoxDecoration(
         color: AppColors.transparentGreen,
         borderRadius: BorderRadius.circular(20.r),

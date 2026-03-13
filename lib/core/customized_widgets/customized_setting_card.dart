@@ -18,7 +18,7 @@ class CustomizedSettingCard extends StatelessWidget {
       height: 63.h,
       width: double.infinity,
       padding: EdgeInsets.all(20.r),
-      margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+      margin: EdgeInsets.symmetric( vertical: 10.h),
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(20.r),

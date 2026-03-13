@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:todo_nti5/core/customized_widgets/customized_tasks_counter.dart';
 import 'package:todo_nti5/core/customized_widgets/empty_tasks_prompt.dart';
 import 'package:todo_nti5/core/resources/text_styles.dart';
+import 'package:todo_nti5/features/profile/profile_screen.dart';
 
 import '../../core/customized_widgets/customized_gourps_card.dart';
 import '../../core/customized_widgets/customized_home_tasks_card.dart';
@@ -30,7 +31,11 @@ class HomeScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             spacing: 20.h,
             children: [
-              HeaderProfile(),
+              InkWell(
+                onTap: (){
+                  Navigator.pushNamed(context, ProfileScreen.routeName);
+                },
+                  child: HeaderProfile()),
               CustomizedHomeTasksCard(),
               customizedTasksCounter(title: "In Progress", count: 5),
               SizedBox(

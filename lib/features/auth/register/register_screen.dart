@@ -15,47 +15,50 @@ class RegisterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(20.r),
-              child: Image.asset(
-                AppImages.authImage,
-                width: 375.w,
-                height: 298.h,
-                fit: BoxFit.cover,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          child: Column(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(20.r),
+                child: Image.asset(
+                  AppImages.authImage,
+                  width: 375.w,
+                  height: 298.h,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            SizedBox(height: 23.h),
-            CustomizedTextField(
-              hintText: "Username",
-              prefixIcon: AppIcons.profileIcon,
-            ),
-            SizedBox(height: 10.h),
-            CustomizedTextField(
-              hintText: "Password",
-              prefixIcon: AppIcons.passwordIcon,
-              isPassword: true,
-            ),
-            SizedBox(height: 10.h),
-            CustomizedTextField(
-              hintText: "Confirm Password",
-              prefixIcon: AppIcons.passwordIcon,
-              isPassword: true,
-            ),
-            SizedBox(height: 23.h),
-            CustomizedButton(title: "Register",),
-            SizedBox(height: 23.h),
-            InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: CustomizedAuthText(
-                prompt: "Already have an account?",
-                title: "Login",
+              SizedBox(height: 23.h),
+              CustomizedTextField(
+                hintText: "Username",
+                prefixIcon: AppIcons.profileIcon,
               ),
-            ),
-          ],
+              SizedBox(height: 10.h),
+              CustomizedTextField(
+                hintText: "Password",
+                prefixIcon: AppIcons.passwordIcon,
+                isPassword: true,
+              ),
+              SizedBox(height: 10.h),
+              CustomizedTextField(
+                hintText: "Confirm Password",
+                prefixIcon: AppIcons.passwordIcon,
+                isPassword: true,
+              ),
+              SizedBox(height: 23.h),
+              CustomizedButton(title: "Register",),
+              SizedBox(height: 23.h),
+              InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: CustomizedAuthText(
+                  prompt: "Already have an account?",
+                  title: "Login",
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

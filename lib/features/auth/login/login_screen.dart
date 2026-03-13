@@ -29,22 +29,31 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 23.h),
-            CustomizedTextField(
-              hintText: "Username",
-              prefixIcon: AppIcons.profileIcon,
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 20.w),
+              child: CustomizedTextField(
+                hintText: "Username",
+                prefixIcon: AppIcons.profileIcon,
+              ),
             ),
             SizedBox(height: 10.h),
-            CustomizedTextField(
-              hintText: "Password",
-              prefixIcon: AppIcons.passwordIcon,
-              isPassword: true,
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 20.w),
+              child: CustomizedTextField(
+                hintText: "Password",
+                prefixIcon: AppIcons.passwordIcon,
+                isPassword: true,
+              ),
             ),
             SizedBox(height: 23.h),
-            InkWell(
-              onTap: () {
-                Navigator.pushReplacementNamed(context, HomeScreen.routeName);
-              },
-              child: CustomizedButton(title: "Login"),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 20.w),
+              child: InkWell(
+                onTap: () {
+                  Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+                },
+                child: CustomizedButton(title: "Login"),
+              ),
             ),
             SizedBox(height: 23.h),
             InkWell(
