@@ -15,6 +15,9 @@ dependencies:
   flutter_screenutil: ^5.9.3
   flutter_svg: ^2.2.2
   dropdown_button2: ^3.0.0
+  dio: ^5.9.2
+  dartz: ^0.10.1
+  shared_preferences:
 
 dev_dependencies:
   flutter_test:

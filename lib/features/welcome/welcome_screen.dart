@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:todo_nti5/core/cache/cache_constants.dart';
+import 'package:todo_nti5/core/cache/cache_helper.dart';
 import 'package:todo_nti5/core/resources/text_styles.dart';
 
 import '../../core/customized_widgets/customized_button.dart';
 import '../../core/resources/app_assets.dart';
-import '../../core/resources/app_colors.dart';
-import '../auth/login/login_screen.dart';
+import '../auth/views/login/login_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   static final String routeName = "/welcome";
@@ -43,10 +44,16 @@ class WelcomeScreen extends StatelessWidget {
             ),
             SizedBox(height: 55.h),
             InkWell(
-                onTap: () {
-                  Navigator.pushReplacementNamed(context, LoginScreen.routeName);
-                },
-                child: CustomizedButton(title: "Let's Start"))
+              onTap: () {
+                CacheHelper.setValue(CacheConstants.isFirstTime, true);
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                  (r) => false,
+                );
+              },
+              child: CustomizedButton(title: "Let's Start"),
+            ),
           ],
         ),
       ),

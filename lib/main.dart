@@ -1,21 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo_nti5/core/resources/app_theme.dart';
-import 'package:todo_nti5/features/auth/login/login_screen.dart';
-import 'package:todo_nti5/features/profile/profile_screen.dart';
-import 'package:todo_nti5/features/welcome/welcome_screen.dart';
-
-import 'features/add_task/add_task_screen.dart';
-import 'features/auth/register/register_screen.dart';
-import 'features/edit_task/edit_task_screen.dart';
-import 'features/home/home_screen.dart';
-import 'features/home/tasks_by_type/tasks_by_type_screen.dart';
-import 'features/profile/chande_password/change_password_screen.dart';
-import 'features/profile/settings/settings_screen.dart';
-import 'features/profile/update_profile/update_profile_screen.dart';
+import 'core/cache/cache_helper.dart';
 import 'features/splash/splash_screen.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await CacheHelper.init();
   runApp(const MyApp());
 }
 
@@ -29,21 +21,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Todo',
         theme: AppTheme.lightTheme,
-        initialRoute: SplashScreen.routeName,
-        routes: {
-          LoginScreen.routeName: (context) => const LoginScreen(),
-          RegisterScreen.routeName: (context) => const RegisterScreen(),
-          HomeScreen.routeName: (context) => const HomeScreen(),
-          SplashScreen.routeName: (context) => const SplashScreen(),
-          WelcomeScreen.routeName: (context) => const WelcomeScreen(),
-          ProfileScreen.routeName: (context) => const ProfileScreen(),
-          UpdateProfileScreen.routeName: (context) => const UpdateProfileScreen(),
-          ChangePasswordScreen.routeName: (context) => const ChangePasswordScreen(),
-          SettingsScreen.routeName: (context) => const SettingsScreen(),
-          AddTaskScreen.routeName: (context) => const AddTaskScreen(),
-          TasksByTypeScreen.routeName: (context) => const TasksByTypeScreen(),
-          EditTaskScreen.routeName: (context) => const EditTaskScreen(),
-        },
+        home: SplashScreen(),
       ),
     );
   }

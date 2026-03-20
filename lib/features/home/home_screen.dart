@@ -1,93 +1,68 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:todo_nti5/core/customized_widgets/customized_list_task_item.dart';
 import 'package:todo_nti5/core/customized_widgets/customized_tasks_counter.dart';
 import 'package:todo_nti5/core/customized_widgets/empty_tasks_prompt.dart';
-import 'package:todo_nti5/core/resources/text_styles.dart';
-import 'package:todo_nti5/features/profile/profile_screen.dart';
+import 'package:todo_nti5/core/customized_widgets/header_profile.dart';
 
-import '../../core/customized_widgets/customized_gourps_card.dart';
-import '../../core/customized_widgets/customized_home_tasks_card.dart';
-import '../../core/customized_widgets/customized_task_item.dart';
-import '../../core/customized_widgets/header_profile.dart';
+import '../../core/cache/cache_constants.dart';
+import '../../core/cache/cache_helper.dart';
 import '../../core/demo_data/demo_tasks_data.dart';
-import '../../core/resources/app_assets.dart';
-import '../../core/resources/app_colors.dart';
-import '../add_task/add_task_screen.dart';
+import '../auth/data/models/user_model.dart';
 
-class HomeScreen extends StatelessWidget {
-  static final String routeName = "/updatedHome";
-
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
-  bool get hasTasks => demoTasks.isNotEmpty;
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+
+  UserModel? userModel;
+
+  @override
+  void initState() {
+    super.initState();
+    final cachedValue = CacheHelper.getValue(CacheConstants.userModel);
+    if (cachedValue != null && cachedValue is String) {
+      userModel = UserModel.fromJson(jsonDecode(cachedValue));
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: hasTasks ? Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 20.h,
+          child: Column(
             children: [
-              InkWell(
-                onTap: (){
-                  Navigator.pushNamed(context, ProfileScreen.routeName);
-                },
-                  child: HeaderProfile()),
-              CustomizedHomeTasksCard(),
-              customizedTasksCounter(title: "In Progress", count: 5),
-              SizedBox(
-                height: 110.h,
-                child: ListView.builder(
-                  itemCount: demoTasks.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: EdgeInsets.only(right: 10.w),
-                      child: CustomizedTaskItem(taskModel: demoTasks[index]),
-                    );
-                  },
-                ),
+              HeaderProfile(userName: userModel?.username ?? "User"),
+              Visibility(
+                visible: demoTasks.isNotEmpty,
+                child: customizedTasksCounter(title: "Tasks", count: 7)
               ),
-              Text("Tasks Group", style: AppTextStyles.bodyMediumText()),
-              CustomizedGroupsCard(title: "Home Tasks", count: 5),
-              CustomizedGroupsCard(
-                title: "Personal Tasks",
-                count: 5,
-                icon: AppIcons.personalIcon,
-                color: AppColors.green,
-                backgroundColor: AppColors.transparentGreen,
-              ),
-              CustomizedGroupsCard(
-                title: "Work Tasks",
-                count: 5,
-                icon: AppIcons.workIcon,
-                color: AppColors.white,
-                backgroundColor: AppColors.black,
+              Expanded(
+                child:
+                    demoTasks.isEmpty
+                        ? EmptyTasksPrompt()
+                        : ListView.builder(
+                          itemCount: demoTasks.length,
+                          itemBuilder: (context, index) {
+                            final task = demoTasks[index];
+
+                            return CustomizedListTaskItem(
+                              title: task.title,
+                              description: task.description,
+                              date: task.date,
+                              time: task.time,
+                            );
+                          },
+                        ),
               ),
             ],
-          ): Column(
-            children: [
-              HeaderProfile(),
-              Expanded(child: EmptyTasksPrompt())
-            ],
-          )
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.pushNamed(context, AddTaskScreen.routeName);
-          },
-          backgroundColor: AppColors.green,
-          child: SvgPicture.asset(
-            AppIcons.addIcon,
-            width: 24.w,
-            height: 24.h,
-            colorFilter: ColorFilter.mode(
-              AppColors.transparentGreen,
-              BlendMode.srcIn,
-            ),
           ),
         ),
       ),

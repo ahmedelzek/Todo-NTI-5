@@ -11,11 +11,17 @@ class CustomizedTextField extends StatefulWidget {
   final String? prefixIcon;
   final bool isPassword;
   final bool isDescription;
+  final TextEditingController? controller;
+  final String? Function(String?)? validator;
+
+
 
   const CustomizedTextField({
     super.key,
     required this.hintText,
     this.prefixIcon,
+    this.controller,
+    this.validator,
     this.isPassword = false,
     this.isDescription = false,
   });
@@ -49,6 +55,8 @@ class _CustomizedTextFieldState extends State<CustomizedTextField> {
       ),
       child: TextFormField(
         obscureText: _obscureText,
+        controller: widget.controller,
+        validator: widget.validator,
         minLines: 1,
         maxLines: widget.isDescription ? null : 1,
         keyboardType: TextInputType.multiline,

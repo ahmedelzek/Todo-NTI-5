@@ -21,7 +21,7 @@ class ProfileScreen extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Column(
             children: [
-              HeaderProfile(),
+              HeaderProfile(userName: "Ahmad"),
               InkWell(
                 onTap: () {
                   Navigator.pushNamed(context, UpdateProfileScreen.routeName);

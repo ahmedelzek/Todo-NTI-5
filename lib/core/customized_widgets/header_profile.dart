@@ -5,7 +5,8 @@ import 'package:todo_nti5/core/resources/app_colors.dart';
 import 'package:todo_nti5/core/resources/text_styles.dart';
 
 class HeaderProfile extends StatelessWidget {
-  const HeaderProfile({super.key});
+  final String userName;
+  const HeaderProfile({super.key, required this.userName});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,7 @@ class HeaderProfile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text("Hello!", style: AppTextStyles.bodySmallLightText(),),
-              Text("Ahmad Adel", style: AppTextStyles.bodyMediumText(),)
+              Text(userName, style: AppTextStyles.bodyMediumText(),)
             ],
           )
         ],

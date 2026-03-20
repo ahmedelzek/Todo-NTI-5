@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:todo_nti5/features/auth/login/login_screen.dart';
 
-import '../../../core/customized_widgets/customized_auth_text.dart';
-import '../../../core/customized_widgets/customized_button.dart';
-import '../../../core/customized_widgets/customized_text_field.dart';
-import '../../../core/resources/app_assets.dart';
+import '../widgets/customized_auth_text.dart';
+import '../../../../core/customized_widgets/customized_button.dart';
+import '../../../../core/customized_widgets/customized_text_field.dart';
+import '../../../../core/resources/app_assets.dart';
 
 class RegisterScreen extends StatelessWidget {
   static final String routeName = "/register";
