@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:todo_nti5/core/network/api_helper.dart';
 import 'package:todo_nti5/core/resources/app_theme.dart';
+
+import 'core/app_router/app_router.dart';
 import 'core/cache/cache_helper.dart';
-import 'features/splash/splash_screen.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  APIHelper.init();
   await CacheHelper.init();
   runApp(const MyApp());
 }
@@ -17,11 +19,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(375,812),
-      child: MaterialApp(
+      designSize: Size(375, 812),
+      child: MaterialApp.router(
         title: 'Todo',
         theme: AppTheme.lightTheme,
-        home: SplashScreen(),
+        routerConfig: appRouter,
+        debugShowCheckedModeBanner: false,
       ),
     );
   }

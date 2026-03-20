@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:todo_nti5/core/app_router/app_router.dart';
+import 'package:todo_nti5/core/app_router/app_router_keys.dart';
 import 'package:todo_nti5/core/cache/cache_constants.dart';
 import 'package:todo_nti5/core/cache/cache_helper.dart';
 import 'package:todo_nti5/core/resources/text_styles.dart';
@@ -46,11 +49,7 @@ class WelcomeScreen extends StatelessWidget {
             InkWell(
               onTap: () {
                 CacheHelper.setValue(CacheConstants.isFirstTime, true);
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
-                  (r) => false,
-                );
+                context.go(AppRouterKeys.login);
               },
               child: CustomizedButton(title: "Let's Start"),
             ),

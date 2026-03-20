@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:todo_nti5/core/app_router/app_router.dart';
+import 'package:todo_nti5/core/app_router/app_router_keys.dart';
 import 'package:todo_nti5/core/cache/cache_helper.dart';
 import 'package:todo_nti5/core/customized_widgets/customized_button.dart';
 import 'package:todo_nti5/core/customized_widgets/customized_text_field.dart';
 import 'package:todo_nti5/features/auth/views/widgets/validator.dart';
 
 import '../../../../core/cache/cache_constants.dart';
-import '../widgets/customized_auth_text.dart';
 import '../../../../core/network/api_helper.dart';
 import '../../../../core/resources/app_assets.dart';
 import '../../../../core/resources/app_colors.dart';
-import '../../../home/home_screen.dart';
 import '../../data/models/user_model.dart';
 import '../register/register_screen.dart';
+import '../widgets/customized_auth_text.dart';
 
 class LoginScreen extends StatefulWidget {
   static final String routeName = "/login";
@@ -24,7 +26,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-
   final _formKey = GlobalKey<FormState>();
   final passwordController = TextEditingController();
   final emailController = TextEditingController();
@@ -51,14 +52,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 SizedBox(height: 23.h),
                 CustomizedTextField(
-                  controller:emailController,
+                  controller: emailController,
                   hintText: "Username",
                   validator: Validators.email,
                   prefixIcon: AppIcons.profileIcon,
                 ),
                 SizedBox(height: 10.h),
                 CustomizedTextField(
-                  controller:passwordController,
+                  controller: passwordController,
                   validator: Validators.password,
                   hintText: "Password",
                   prefixIcon: AppIcons.passwordIcon,
@@ -74,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(height: 23.h),
                 InkWell(
                   onTap: () {
-                    Navigator.pushNamed(context, RegisterScreen.routeName);
+                    context.go(AppRouterKeys.register);
                   },
                   child: CustomizedAuthText(
                     prompt: "Don't have account?",
@@ -89,30 +90,37 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void login() async{
-    if(_formKey.currentState?.validate() == true){
+  void login() async {
+    if (_formKey.currentState?.validate() == true) {
       setState(() {
         isLoading = true;
       });
-      var result = await APIHelper.login(username: emailController.text, password: passwordController.text);
+      var result = await APIHelper.login(
+        username: emailController.text,
+        password: passwordController.text,
+      );
       result.fold(
-              (String error){
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(error, style: TextStyle(color: AppColors.white),),
+        (String error) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(error, style: TextStyle(color: AppColors.white)),
               backgroundColor: AppColors.red,
-            ));
-          },
-              (UserModel userModel){
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text('Login successfully\n Welcome ${userModel.username}', style: TextStyle(color: AppColors.white),),
+            ),
+          );
+        },
+        (UserModel userModel) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'Login successfully\n Welcome ${userModel.username}',
+                style: TextStyle(color: AppColors.white),
+              ),
               backgroundColor: AppColors.green,
-            ));
-            Navigator.pushAndRemoveUntil(context,
-                MaterialPageRoute(builder: (context)=> HomeScreen()),
-                    (r)=> false
-            );
-            CacheHelper.setValue(CacheConstants.userModel, userModel);
-          }
+            ),
+          );
+          context.go(AppRouterKeys.home);
+          CacheHelper.setValue(CacheConstants.userModel, userModel);
+        },
       );
       setState(() {
         isLoading = false;
@@ -120,4 +128,3 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 }
-

@@ -2,16 +2,15 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:todo_nti5/features/auth/views/login/login_screen.dart';
-import 'package:todo_nti5/features/home/home_screen.dart';
-import 'package:todo_nti5/features/welcome/welcome_screen.dart';
+import 'package:go_router/go_router.dart';
+import 'package:todo_nti5/core/app_router/app_router.dart';
+import 'package:todo_nti5/core/app_router/app_router_keys.dart';
 
 import '../../core/cache/cache_constants.dart';
 import '../../core/cache/cache_helper.dart';
 import '../../core/resources/app_assets.dart';
 
 class SplashScreen extends StatefulWidget {
-
   const SplashScreen({super.key});
 
   @override
@@ -30,23 +29,11 @@ class _SplashScreenState extends State<SplashScreen> {
       final token = CacheHelper.getValue(CacheConstants.accessToken);
 
       if (isFirstTime == null) {
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (_) => WelcomeScreen()),
-          (r) => false,
-        );
+        context.go(AppRouterKeys.welcome);
       } else if (token == null) {
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (_) => LoginScreen()),
-          (r) => false,
-        );
+        context.go(AppRouterKeys.login);
       } else {
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (_) => HomeScreen()),
-          (r) => false,
-        );
+        context.go(AppRouterKeys.home);
       }
     });
   }
