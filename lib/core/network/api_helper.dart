@@ -16,8 +16,6 @@ abstract class APIHelper {
   static final _dio = Dio(BaseOptions(baseUrl: EndPoints.baseUrl));
   static bool _isRefreshing = false;
 
-
-
   static void init() {
     _dio.interceptors.add(
       InterceptorsWrapper(
@@ -48,10 +46,11 @@ abstract class APIHelper {
     );
   }
 
-
   static Future<bool> _refreshAccessToken() async {
     try {
-      final storedRefreshToken = CacheHelper.getValue(CacheConstants.refreshToken);
+      final storedRefreshToken = CacheHelper.getValue(
+        CacheConstants.refreshToken,
+      );
 
       final response = await _dio.post(
         EndPoints.refreshToken,
@@ -63,7 +62,10 @@ abstract class APIHelper {
 
       await CacheHelper.setValue(CacheConstants.accessToken, newAccessToken);
       if (newRefreshToken != null) {
-        await CacheHelper.setValue(CacheConstants.refreshToken, newRefreshToken);
+        await CacheHelper.setValue(
+          CacheConstants.refreshToken,
+          newRefreshToken,
+        );
       }
 
       return true;
@@ -140,7 +142,7 @@ abstract class APIHelper {
     }
   }
 
-  static Future<Either<String, List<TaskModel>>> getTasks()  async {
+  static Future<Either<String, List<TaskModel>>> getTasks() async {
     try {
       var registerResponse = await _dio.get(
         'my_tasks',
@@ -157,6 +159,36 @@ abstract class APIHelper {
         tasks.add(TaskModel.fromJson(taskJson));
       }
       return Right(tasks);
+    } catch (e) {
+      if (e is DioException) {
+        var errorResponse = e.response?.data as Map<String, dynamic>;
+        return Left(errorResponse['message'] ?? 'Unknown error');
+      } else {
+        return Left('An Error occurred.\nTry again later');
+      }
+    }
+  }
+
+  static Future<Either<String, String>> addTask({
+    required String title,
+    required String description,
+  }) async {
+    TaskModel newTask = TaskModel(title: title, description: description);
+
+    try {
+      var addResponse = await _dio.post(
+        EndPoints.addTask,
+        data: FormData.fromMap(newTask.toJson()),
+        options: Options(
+          headers: {
+            'Authorization':
+                'Bearer ${await CacheHelper.getValue(CacheConstants.accessToken)}',
+          },
+        ),
+      );
+      var response = addResponse.data as Map<String, dynamic>;
+
+      return Right(response['message'] ?? 'Task added successfully');
     } catch (e) {
       if (e is DioException) {
         var errorResponse = e.response?.data as Map<String, dynamic>;

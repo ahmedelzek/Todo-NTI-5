@@ -6,8 +6,9 @@ import 'package:todo_nti5/core/customized_widgets/delete_button.dart';
 import 'package:todo_nti5/core/resources/app_assets.dart';
 import 'package:todo_nti5/core/resources/text_styles.dart';
 
-import '../../core/customized_widgets/customized_text_field.dart';
-import '../../core/resources/app_colors.dart';
+import '../../../../core/customized_widgets/customized_text_field.dart';
+import '../../../../core/resources/app_colors.dart';
+
 
 class EditTaskScreen extends StatelessWidget {
   static final String routeName = "/editTask";

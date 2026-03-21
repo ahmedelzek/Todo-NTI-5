@@ -42,7 +42,7 @@ class _CustomizedGroupSpinnerFieldState
     return Container(
       height: 63.h,
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 12),
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.r),
         color: AppColors.white,
@@ -67,7 +67,6 @@ class _CustomizedGroupSpinnerFieldState
 
                 return DropdownMenuItem<Map<String, dynamic>>(
                   value: item,
-                  alignment: Alignment.bottomCenter,
                   child: Row(
                     children: [
                       Container(

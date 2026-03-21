@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../resources/app_colors.dart';
-import '../resources/text_styles.dart';
+import '../../../core/resources/app_colors.dart';
+import '../../../core/resources/text_styles.dart';
 
 Widget customizedTasksCounter({required String title, required int count}){
   return Row(

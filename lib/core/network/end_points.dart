@@ -5,4 +5,5 @@ abstract class EndPoints{
   static const String refreshToken = "refresh_token";
   static const String register = "register";
   static const String myTasks = "my_tasks";
+  static const String addTask = "new_task";
 }

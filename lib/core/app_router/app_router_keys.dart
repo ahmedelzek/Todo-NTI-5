@@ -5,5 +5,7 @@ abstract class AppRouterKeys{
   static const String splash = "/splash";
   static const String welcome = "/welcome";
   static const String profile = "/profile";
+  static const String addTasks = "/addTasks";
+  static const String editTasks = "/editTasks";
 
 }

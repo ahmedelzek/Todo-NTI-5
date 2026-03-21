@@ -2,16 +2,22 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:todo_nti5/core/customized_widgets/customized_list_task_item.dart';
-import 'package:todo_nti5/core/customized_widgets/customized_tasks_counter.dart';
-import 'package:todo_nti5/core/customized_widgets/empty_tasks_prompt.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:todo_nti5/core/customized_widgets/header_profile.dart';
 import 'package:todo_nti5/core/network/api_helper.dart';
+import 'package:todo_nti5/features/home/widgets/customized_list_task_item.dart';
+import 'package:todo_nti5/features/home/widgets/customized_tasks_counter.dart';
+import 'package:todo_nti5/features/home/widgets/empty_tasks_prompt.dart';
 
+import '../../../core/app_router/app_router_keys.dart';
 import '../../../core/cache/cache_constants.dart';
 import '../../../core/cache/cache_helper.dart';
+import '../../../core/resources/app_assets.dart';
+import '../../../core/resources/app_colors.dart';
 import '../../auth/data/models/user_model.dart';
 import '../data/tasks_model.dart';
+import '../widgets/extention_functions.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,7 +28,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   UserModel? userModel;
-  List< TaskModel> tasks = [];
+  List<TaskModel> tasks = [];
   bool isLoading = true;
   String? errorMessage;
 
@@ -47,7 +53,10 @@ class _HomeScreenState extends State<HomeScreen> {
               HeaderProfile(userName: userModel?.username ?? "User"),
               Visibility(
                 visible: tasks.isNotEmpty,
-                child: customizedTasksCounter(title: "Tasks", count: tasks.length),
+                child: customizedTasksCounter(
+                  title: "Tasks",
+                  count: tasks.length,
+                ),
               ),
               Expanded(
                 child:
@@ -58,6 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         : tasks.isEmpty
                         ? EmptyTasksPrompt()
                         : ListView.builder(
+                          padding: EdgeInsets.symmetric(horizontal: 1.w),
                           itemCount: tasks.length,
                           itemBuilder: (context, index) {
                             final task = tasks[index];
@@ -71,6 +81,22 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
               ),
             ],
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            await context.push(AppRouterKeys.addTasks);
+            fetchTasks();
+          },
+          backgroundColor: AppColors.green,
+          child: SvgPicture.asset(
+            AppIcons.addIcon,
+            width: 24.w,
+            height: 24.h,
+            colorFilter: ColorFilter.mode(
+              AppColors.transparentGreen,
+              BlendMode.srcIn,
+            ),
           ),
         ),
       ),
@@ -93,22 +119,5 @@ class _HomeScreenState extends State<HomeScreen> {
         });
       },
     );
-  }
-
-  String extractDate(String? createdAt) {
-    if (createdAt == null) return '';
-    return createdAt.split('T').first;
-  }
-
-  String extractTime(String? createdAt) {
-    if (createdAt == null) return '';
-    try {
-      final dateTime = DateTime.parse(createdAt);
-      final hour = dateTime.hour.toString().padLeft(2, '0');
-      final minute = dateTime.minute.toString().padLeft(2, '0');
-      return '$hour:$minute';
-    } catch (e) {
-      return '';
-    }
   }
 }
