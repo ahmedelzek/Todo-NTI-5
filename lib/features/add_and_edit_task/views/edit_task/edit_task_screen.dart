@@ -13,6 +13,7 @@ import '../../../../core/network/api_helper.dart';
 import '../../../../core/resources/app_colors.dart';
 import '../../../home/data/tasks_model.dart';
 import '../widgets/cutomized_date_picker_text_field.dart';
+import '../widgets/delete_dialog.dart';
 
 class EditTaskScreen extends StatefulWidget {
   final TaskModel task;
@@ -49,7 +50,16 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
             },
             icon: Icon(Icons.arrow_back_ios_new),
           ),
-          actions: [DeleteButton()],
+          actions: [
+            InkWell(
+              onTap: () {
+                showDeleteDialog(context, () {
+                  delete();
+                });
+              },
+              child: DeleteButton(),
+            ),
+          ],
         ),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
@@ -108,7 +118,6 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                 SizedBox(height: 10.h),
                 InkWell(
                   onTap: () {
-                    print("Update clicked");
                     update();
                   },
                   child: CustomizedUpdateButton(),
@@ -140,7 +149,34 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              'The Task Added Successfully',
+              'The Task Updated Successfully',
+              style: TextStyle(color: AppColors.white),
+            ),
+            backgroundColor: AppColors.green,
+          ),
+        );
+        context.pop();
+      },
+    );
+  }
+  void delete() async {
+    final result = await APIHelper.deleteTask(
+      taskId: widget.task.id.toString(),
+    );
+    result.fold(
+      (String error) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(error, style: TextStyle(color: AppColors.white)),
+            backgroundColor: AppColors.red,
+          ),
+        );
+      },
+      (String success) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'The Task Deleted Successfully',
               style: TextStyle(color: AppColors.white),
             ),
             backgroundColor: AppColors.green,

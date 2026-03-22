@@ -14,30 +14,44 @@ import 'end_points.dart';
 
 abstract class APIHelper {
   static final _dio = Dio(BaseOptions(baseUrl: EndPoints.baseUrl));
+  static final _refreshDio = Dio(BaseOptions(baseUrl: EndPoints.baseUrl));
+  static final List<(DioException, ErrorInterceptorHandler)> _pendingRequests = [];
   static bool _isRefreshing = false;
 
   static void init() {
     _dio.interceptors.add(
       InterceptorsWrapper(
         onError: (DioException error, ErrorInterceptorHandler handler) async {
-          if (error.response?.statusCode == 401 && !_isRefreshing) {
-            _isRefreshing = true;
+          if (error.response?.statusCode == 401) {
+            if (_isRefreshing) {
+              _pendingRequests.add((error, handler));
+              return;
+            }
 
+            _isRefreshing = true;
             final refreshed = await _refreshAccessToken();
 
             if (refreshed) {
               _isRefreshing = false;
-
               final newToken = CacheHelper.getValue(CacheConstants.accessToken);
+
               final options = error.requestOptions;
               options.headers['Authorization'] = 'Bearer $newToken';
-
               final retryResponse = await _dio.fetch(options);
-              return handler.resolve(retryResponse);
+              handler.resolve(retryResponse);
+
+              for (final (pendingError, pendingHandler) in _pendingRequests) {
+                pendingError.requestOptions.headers['Authorization'] = 'Bearer $newToken';
+                final retryRes = await _dio.fetch(pendingError.requestOptions);
+                pendingHandler.resolve(retryRes);
+              }
+              _pendingRequests.clear();
             } else {
               _isRefreshing = false;
+              _pendingRequests.clear();
               await _logout();
             }
+            return;
           }
 
           return handler.next(error);
@@ -45,14 +59,11 @@ abstract class APIHelper {
       ),
     );
   }
-
   static Future<bool> _refreshAccessToken() async {
     try {
-      final storedRefreshToken = CacheHelper.getValue(
-        CacheConstants.refreshToken,
-      );
+      final storedRefreshToken = CacheHelper.getValue(CacheConstants.refreshToken);
 
-      final response = await _dio.post(
+      final response = await _refreshDio.post(
         EndPoints.refreshToken,
         data: FormData.fromMap({'refresh_token': storedRefreshToken}),
       );
@@ -62,10 +73,7 @@ abstract class APIHelper {
 
       await CacheHelper.setValue(CacheConstants.accessToken, newAccessToken);
       if (newRefreshToken != null) {
-        await CacheHelper.setValue(
-          CacheConstants.refreshToken,
-          newRefreshToken,
-        );
+        await CacheHelper.setValue(CacheConstants.refreshToken, newRefreshToken);
       }
 
       return true;
@@ -73,7 +81,6 @@ abstract class APIHelper {
       return false;
     }
   }
-
   static Future<void> _logout() async {
     await CacheHelper.removeValue(CacheConstants.accessToken);
     await CacheHelper.removeValue(CacheConstants.refreshToken);
@@ -115,7 +122,7 @@ abstract class APIHelper {
     }
   }
 
-  Future<Either<String, RegisterResponse>> register({
+  static Future<Either<String, RegisterResponse>> register({
     required String username,
     required String password,
   }) async {
@@ -199,7 +206,7 @@ abstract class APIHelper {
     }
   }
 
- static Future<Either<String, String>> updateTask({
+  static Future<Either<String, String>> updateTask({
     required String taskId,
     required String newTitle,
     required String newDescription,
@@ -214,16 +221,43 @@ abstract class APIHelper {
         options: Options(
           headers: {
             'Authorization':
-            'Bearer ${CacheHelper.getValue(CacheConstants.accessToken)}',
+                'Bearer ${CacheHelper.getValue(CacheConstants.accessToken)}',
           },
         ),
       );
-      return Right(updateResponse.data['message'] ?? 'Task updated successfully');
+      return Right(
+        updateResponse.data['message'] ?? 'Task updated successfully',
+      );
     } catch (e) {
       if (e is DioException) {
         var errorResponse = e.response?.data as Map<String, dynamic>;
         return Left(errorResponse['message'] ?? 'Unknown error');
       } else {
+        return Left('An Error occurred.\nTry again later');
+      }
+    }
+  }
+
+  static Future<Either<String, String>> deleteTask({
+    required String taskId,
+  }) async {
+    try {
+      var deleteResponse = await _dio.delete(
+        '${EndPoints.updateTask}/$taskId',
+        options: Options(
+          headers: {
+            'Authorization':
+                'Bearer ${CacheHelper.getValue(CacheConstants.accessToken)}',
+          },
+        ),
+      );
+      return Right(deleteResponse.data['message'] ?? 'Task deleted successfully',);
+    } catch (e) {
+      if (e is DioException) {
+        var errorResponse = e.response?.data as Map<String, dynamic>;
+        return Left(errorResponse['message'] ?? 'Unknown error');
+      } else {
+        print(e.toString());
         return Left('An Error occurred.\nTry again later');
       }
     }
