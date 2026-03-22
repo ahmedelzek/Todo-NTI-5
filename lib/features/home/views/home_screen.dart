@@ -6,9 +6,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo_nti5/core/customized_widgets/header_profile.dart';
 import 'package:todo_nti5/core/network/api_helper.dart';
-import 'package:todo_nti5/features/home/widgets/customized_list_task_item.dart';
-import 'package:todo_nti5/features/home/widgets/customized_tasks_counter.dart';
-import 'package:todo_nti5/features/home/widgets/empty_tasks_prompt.dart';
+import 'package:todo_nti5/features/home/views/widgets/customized_list_task_item.dart';
+import 'package:todo_nti5/features/home/views/widgets/customized_tasks_counter.dart';
+import 'package:todo_nti5/features/home/views/widgets/empty_tasks_prompt.dart';
+import 'package:todo_nti5/features/home/views/widgets/extension_functions.dart';
 
 import '../../../core/app_router/app_router_keys.dart';
 import '../../../core/cache/cache_constants.dart';
@@ -17,7 +18,6 @@ import '../../../core/resources/app_assets.dart';
 import '../../../core/resources/app_colors.dart';
 import '../../auth/data/models/user_model.dart';
 import '../data/tasks_model.dart';
-import '../widgets/extention_functions.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -71,11 +71,20 @@ class _HomeScreenState extends State<HomeScreen> {
                           itemCount: tasks.length,
                           itemBuilder: (context, index) {
                             final task = tasks[index];
-                            return CustomizedListTaskItem(
-                              title: task.title ?? '',
-                              description: task.description ?? '',
-                              date: extractDate(task.createdAt),
-                              time: extractTime(task.createdAt),
+                            return InkWell(
+                              onTap: () async{
+                                await context.push(
+                                  AppRouterKeys.editTasks,
+                                  extra: task,
+                                );
+                                fetchTasks();
+                              },
+                              child: CustomizedListTaskItem(
+                                title: task.title ?? '',
+                                description: task.description ?? '',
+                                date: extractDate(task.createdAt),
+                                time: extractTime(task.createdAt),
+                              ),
                             );
                           },
                         ),

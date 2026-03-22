@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../resources/app_assets.dart';
-import '../resources/app_colors.dart';
-import '../resources/text_styles.dart';
+import '../../../../core/resources/app_assets.dart';
+import '../../../../core/resources/app_colors.dart';
+import '../../../../core/resources/text_styles.dart';
 
 class CustomizedGroupSpinnerField extends StatefulWidget {
   const CustomizedGroupSpinnerField({super.key});

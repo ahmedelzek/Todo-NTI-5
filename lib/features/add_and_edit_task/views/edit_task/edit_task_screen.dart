@@ -1,19 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:todo_nti5/core/customized_widgets/customized_button.dart';
-import 'package:todo_nti5/core/customized_widgets/customized_spinner.dart';
 import 'package:todo_nti5/core/customized_widgets/delete_button.dart';
 import 'package:todo_nti5/core/resources/app_assets.dart';
 import 'package:todo_nti5/core/resources/text_styles.dart';
+import 'package:todo_nti5/features/add_and_edit_task/views/widgets/customized_spinner.dart';
+import 'package:todo_nti5/features/add_and_edit_task/views/widgets/customized_update_button.dart';
 
 import '../../../../core/customized_widgets/customized_text_field.dart';
+import '../../../../core/network/api_helper.dart';
 import '../../../../core/resources/app_colors.dart';
+import '../../../home/data/tasks_model.dart';
+import '../widgets/cutomized_date_picker_text_field.dart';
 
+class EditTaskScreen extends StatefulWidget {
+  final TaskModel task;
 
-class EditTaskScreen extends StatelessWidget {
-  static final String routeName = "/editTask";
+  const EditTaskScreen({super.key, required this.task});
 
-  const EditTaskScreen({super.key});
+  @override
+  State<EditTaskScreen> createState() => _EditTaskScreenState();
+}
+
+class _EditTaskScreenState extends State<EditTaskScreen> {
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _titleController.text = widget.task.title ?? '';
+    _descriptionController.text = widget.task.description ?? '';
+    _dateController.text = widget.task.createdAt ?? '';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,66 +53,101 @@ class EditTaskScreen extends StatelessWidget {
         ),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-          child: Column(
-            spacing: 10,
-            children: [
-              Row(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(40.r),
-                    child: Image.asset(
-                      AppImages.authImage,
-                      height: 80.h,
-                      width: 80.h,
-                      fit: BoxFit.cover,
+          child: SingleChildScrollView(
+            child: Column(
+              spacing: 10,
+              children: [
+                Row(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(40.r),
+                      child: Image.asset(
+                        AppImages.authImage,
+                        height: 80.h,
+                        width: 80.h,
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ),
-                  SizedBox(width: 10.w),
-                  Expanded(
-                    child: Text(
-                      "In Progress Believe you can, and you're halfway there.",
-                      style: AppTextStyles.bodyMediumText(),
-                      maxLines: null,
-                      softWrap: true,
+                    SizedBox(width: 10.w),
+                    Expanded(
+                      child: Text(
+                        "In Progress Believe you can, and you're halfway there.",
+                        style: AppTextStyles.bodyMediumText(),
+                        maxLines: null,
+                        softWrap: true,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              CustomizedGroupSpinnerField(),
-              CustomizedTextField(hintText: "Title"),
-              CustomizedTextField(hintText: "Description", isDescription: true),
-              CustomizedTextField(hintText: "Date", prefixIcon: AppIcons.calendarIcon),
-              SizedBox(height: 90.h),
-              CustomizedButton(title: "Mark As Done"),
-              SizedBox(height: 10.h),
-              Container(
-                height: 50.h,
-                width: double.infinity,
-                alignment: Alignment.center,
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.r),
-                  border: Border.all(color: AppColors.green, width: 2.w),
-                  color: AppColors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.green.withOpacity(0.7),
-                      offset: Offset(0, 2),
-                      spreadRadius: 0,
-                      blurRadius: 10.w,
-                    )
-                  ]
+                  ],
                 ),
-                child: Text("Update", style: TextStyle(
-                  color: AppColors.green,
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w500,
-                ),),
-              )
-            ],
+                CustomizedGroupSpinnerField(),
+                CustomizedTextField(
+                  hintText: "Title",
+                  controller: _titleController,
+                ),
+                CustomizedTextField(
+                  hintText: "Description",
+                  isDescription: true,
+                  controller: _descriptionController,
+                ),
+                CustomizedTextField(
+                  hintText: "Date",
+                  prefixIcon: AppIcons.calendarIcon,
+                  readOnly: true,
+                  controller: _dateController,
+                  onTap: () {
+                    setState(() {
+                      selectDate(
+                        context: context,
+                        dateController: _dateController,
+                      );
+                    });
+                  },
+                ),
+                SizedBox(height: 90.h),
+                CustomizedButton(title: "Mark As Done"),
+                SizedBox(height: 10.h),
+                InkWell(
+                  onTap: () {
+                    print("Update clicked");
+                    update();
+                  },
+                  child: CustomizedUpdateButton(),
+                ),
+              ],
+            ),
           ),
         ),
       ),
+    );
+  }
+
+  void update() async {
+    final result = await APIHelper.updateTask(
+      taskId: widget.task.id.toString(),
+      newTitle: _titleController.text,
+      newDescription: _descriptionController.text,
+    );
+    result.fold(
+      (String error) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(error, style: TextStyle(color: AppColors.white)),
+            backgroundColor: AppColors.red,
+          ),
+        );
+      },
+      (String success) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'The Task Added Successfully',
+              style: TextStyle(color: AppColors.white),
+            ),
+            backgroundColor: AppColors.green,
+          ),
+        );
+        context.pop();
+      },
     );
   }
 }

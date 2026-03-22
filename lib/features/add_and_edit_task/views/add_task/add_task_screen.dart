@@ -4,12 +4,12 @@ import 'package:go_router/go_router.dart';
 import 'package:todo_nti5/core/customized_widgets/customized_button.dart';
 import 'package:todo_nti5/core/network/api_helper.dart';
 import 'package:todo_nti5/core/resources/app_assets.dart';
-import 'package:todo_nti5/features/add_and_edit_task/views/widgets/cutomized_date_picker_text_field.dart';
 
-import '../../../../core/customized_widgets/customized_spinner.dart';
 import '../../../../core/customized_widgets/customized_text_field.dart';
 import '../../../../core/resources/app_colors.dart';
-import '../../../auth/views/widgets/validator.dart';
+import '../../../../core/validator.dart';
+import '../widgets/customized_spinner.dart';
+import '../widgets/cutomized_date_picker_text_field.dart';
 
 class AddTaskScreen extends StatefulWidget {
   const AddTaskScreen({super.key});
@@ -21,6 +21,8 @@ class AddTaskScreen extends StatefulWidget {
 class _AddTaskScreenState extends State<AddTaskScreen> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -69,7 +71,20 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 SizedBox(height: 10.h),
                 CustomizedGroupSpinnerField(),
                 SizedBox(height: 10.h),
-                CustomizedDatePickerTextField(),
+                CustomizedTextField(
+                  hintText: "Date",
+                  prefixIcon: AppIcons.calendarIcon,
+                  readOnly: true,
+                  onTap: () {
+                    setState(() {
+                      selectDate(
+                        context: context,
+                        dateController: _dateController,
+                      );
+                    });
+                  },
+                  controller: _dateController,
+                ),
                 SizedBox(height: 10.h),
                 InkWell(
                   onTap: () {
@@ -92,7 +107,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         description: _descriptionController.text,
       );
       result.fold(
-            (String error) {
+        (String error) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(error, style: TextStyle(color: AppColors.white)),
@@ -100,7 +115,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             ),
           );
         },
-            (String success) {
+        (String success) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(

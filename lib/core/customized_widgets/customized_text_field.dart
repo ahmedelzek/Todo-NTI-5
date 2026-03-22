@@ -11,8 +11,10 @@ class CustomizedTextField extends StatefulWidget {
   final String? prefixIcon;
   final bool isPassword;
   final bool isDescription;
+  final bool readOnly;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
+  final Function()? onTap;
 
 
 
@@ -22,8 +24,10 @@ class CustomizedTextField extends StatefulWidget {
     this.prefixIcon,
     this.controller,
     this.validator,
+    this.onTap ,
     this.isPassword = false,
     this.isDescription = false,
+    this.readOnly = false,
   });
 
   @override
@@ -57,6 +61,8 @@ class _CustomizedTextFieldState extends State<CustomizedTextField> {
         obscureText: _obscureText,
         controller: widget.controller,
         validator: widget.validator,
+        readOnly: widget.readOnly,
+        onTap: widget.onTap,
         minLines: 1,
         maxLines: widget.isDescription ? null : 1,
         keyboardType: TextInputType.multiline,

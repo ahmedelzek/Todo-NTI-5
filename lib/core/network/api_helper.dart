@@ -145,7 +145,7 @@ abstract class APIHelper {
   static Future<Either<String, List<TaskModel>>> getTasks() async {
     try {
       var registerResponse = await _dio.get(
-        'my_tasks',
+        EndPoints.myTasks,
         options: Options(
           headers: {
             'Authorization':
@@ -189,6 +189,36 @@ abstract class APIHelper {
       var response = addResponse.data as Map<String, dynamic>;
 
       return Right(response['message'] ?? 'Task added successfully');
+    } catch (e) {
+      if (e is DioException) {
+        var errorResponse = e.response?.data as Map<String, dynamic>;
+        return Left(errorResponse['message'] ?? 'Unknown error');
+      } else {
+        return Left('An Error occurred.\nTry again later');
+      }
+    }
+  }
+
+ static Future<Either<String, String>> updateTask({
+    required String taskId,
+    required String newTitle,
+    required String newDescription,
+  }) async {
+    try {
+      var updateResponse = await _dio.put(
+        '${EndPoints.updateTask}/$taskId',
+        data: FormData.fromMap({
+          'title': newTitle,
+          'description': newDescription,
+        }),
+        options: Options(
+          headers: {
+            'Authorization':
+            'Bearer ${CacheHelper.getValue(CacheConstants.accessToken)}',
+          },
+        ),
+      );
+      return Right(updateResponse.data['message'] ?? 'Task updated successfully');
     } catch (e) {
       if (e is DioException) {
         var errorResponse = e.response?.data as Map<String, dynamic>;

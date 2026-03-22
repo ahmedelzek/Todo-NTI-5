@@ -6,7 +6,7 @@ import 'package:todo_nti5/core/app_router/app_router_keys.dart';
 import 'package:todo_nti5/core/cache/cache_helper.dart';
 import 'package:todo_nti5/core/customized_widgets/customized_button.dart';
 import 'package:todo_nti5/core/customized_widgets/customized_text_field.dart';
-import 'package:todo_nti5/features/auth/views/widgets/validator.dart';
+import 'package:todo_nti5/core/validator.dart';
 
 import '../../../../core/cache/cache_constants.dart';
 import '../../../../core/network/api_helper.dart';
