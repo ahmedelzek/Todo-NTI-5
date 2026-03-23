@@ -75,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(height: 23.h),
                 InkWell(
                   onTap: () {
-                    context.go(AppRouterKeys.register);
+                    context.push(AppRouterKeys.register);
                   },
                   child: CustomizedAuthText(
                     prompt: "Don't have account?",
