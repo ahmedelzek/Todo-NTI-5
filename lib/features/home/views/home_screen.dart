@@ -1,132 +1,133 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo_nti5/core/customized_widgets/header_profile.dart';
-import 'package:todo_nti5/core/network/api_helper.dart';
+import 'package:todo_nti5/features/home/cubit/home_cubit.dart';
+import 'package:todo_nti5/features/home/cubit/home_state.dart';
 import 'package:todo_nti5/features/home/views/widgets/customized_list_task_item.dart';
 import 'package:todo_nti5/features/home/views/widgets/customized_tasks_counter.dart';
-import 'package:todo_nti5/features/home/views/widgets/empty_tasks_prompt.dart';
 import 'package:todo_nti5/features/home/views/widgets/extension_functions.dart';
 
 import '../../../core/app_router/app_router_keys.dart';
-import '../../../core/cache/cache_constants.dart';
-import '../../../core/cache/cache_helper.dart';
 import '../../../core/resources/app_assets.dart';
 import '../../../core/resources/app_colors.dart';
-import '../../auth/data/models/user_model.dart';
-import '../data/tasks_model.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  UserModel? userModel;
-  List<TaskModel> tasks = [];
-  bool isLoading = true;
-  String? errorMessage;
-
-  @override
-  void initState() {
-    super.initState();
-    final cachedValue = CacheHelper.getValue(CacheConstants.userModel);
-    if (cachedValue != null && cachedValue is String) {
-      userModel = UserModel.fromJson(jsonDecode(cachedValue));
-    }
-    fetchTasks();
-  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: Column(
-            children: [
-              HeaderProfile(userName: userModel?.username ?? "User"),
-              Visibility(
-                visible: tasks.isNotEmpty,
-                child: customizedTasksCounter(
-                  title: "Tasks",
-                  count: tasks.length,
-                ),
-              ),
-              Expanded(
-                child:
-                    isLoading
-                        ? Center(child: CircularProgressIndicator())
-                        : errorMessage != null
-                        ? Center(child: Text(errorMessage!))
-                        : tasks.isEmpty
-                        ? EmptyTasksPrompt()
-                        : ListView.builder(
-                          padding: EdgeInsets.symmetric(horizontal: 1.w),
-                          itemCount: tasks.length,
-                          itemBuilder: (context, index) {
-                            final task = tasks[index];
-                            return InkWell(
-                              onTap: () async{
-                                await context.push(
-                                  AppRouterKeys.editTasks,
-                                  extra: task,
-                                );
-                                fetchTasks();
+      child: BlocProvider(
+        create: (context)=> HomeCubit()..getTasks(),
+        child: Scaffold(
+          body:Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: BlocBuilder<HomeCubit, HomeState>(
+                      builder: (context, state) {
+                        var cubit = HomeCubit.get(context);
+
+                        if (state is HomeLoadingState) {
+                          return const Center(child: CircularProgressIndicator());
+                        }
+
+                        if (state is HomeErrorState) {
+                          return Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  state.error,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(color: AppColors.red),
+                                ),
+                                SizedBox(height: 16.h),
+                                ElevatedButton(
+                                  onPressed: () => cubit.getTasks(),
+                                  child: const Text('Try Again'),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                        return Column(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                context.push(AppRouterKeys.profile);
                               },
-                              child: CustomizedListTaskItem(
-                                title: task.title ?? '',
-                                description: task.description ?? '',
-                                date: extractDate(task.createdAt),
-                                time: extractTime(task.createdAt),
+                              child: Row(
+                                children: [
+                                  HeaderProfile(
+                                    userName: "User",
+                                  ),
+                                  Spacer(),
+                                  IconButton(
+                                    onPressed: () {
+                                      context.go(AppRouterKeys.login);
+                                    },
+                                    icon: Icon(
+                                      Icons.logout_outlined,
+                                      color: AppColors.red,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            );
-                          },
-                        ),
+                            ),
+                            Visibility(
+                              child: customizedTasksCounter(
+                                title: "Tasks",
+                                count: cubit.tasks.length,
+                              ),
+                            ),
+                            Expanded(
+                              child: ListView.builder(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 1.w,
+                                        ),
+                                        itemCount: cubit.tasks.length,
+                                        itemBuilder: (context, index) {
+                                          var task = cubit.tasks[index];
+                                          return InkWell(
+                                            onTap: () async {
+                                              await context.push(
+                                                AppRouterKeys.editTasks,
+                                              );
+                                            },
+                                            child: CustomizedListTaskItem(
+                                              title:task.title,
+                                              description: task.description,
+                                              date: extractDate(task.createdAt),
+                                              time: extractTime(task.createdAt),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () async {
+              await context.push(AppRouterKeys.addTasks);
+            },
+            backgroundColor: AppColors.green,
+            child: SvgPicture.asset(
+              AppIcons.addIcon,
+              width: 24.w,
+              height: 24.h,
+              colorFilter: ColorFilter.mode(
+                AppColors.transparentGreen,
+                BlendMode.srcIn,
               ),
-            ],
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            await context.push(AppRouterKeys.addTasks);
-            fetchTasks();
-          },
-          backgroundColor: AppColors.green,
-          child: SvgPicture.asset(
-            AppIcons.addIcon,
-            width: 24.w,
-            height: 24.h,
-            colorFilter: ColorFilter.mode(
-              AppColors.transparentGreen,
-              BlendMode.srcIn,
             ),
           ),
         ),
       ),
-    );
-  }
-
-  void fetchTasks() async {
-    final result = await APIHelper.getTasks();
-    result.fold(
-      (error) {
-        setState(() {
-          errorMessage = error;
-          isLoading = false;
-        });
-      },
-      (fetchedTasks) {
-        setState(() {
-          tasks = fetchedTasks;
-          isLoading = false;
-        });
-      },
     );
   }
 }

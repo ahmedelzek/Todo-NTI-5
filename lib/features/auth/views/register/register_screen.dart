@@ -76,7 +76,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 InkWell(
                     onTap: () {
                       setState(() {
-                        register();
+
                       });
                     },
                     child: CustomizedButton(title: "Register",)),
@@ -98,6 +98,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
+/*
   void register() async {
     if (_formKey.currentState?.validate() == true) {
       var result = await APIHelper.register(
@@ -128,4 +129,5 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
     }
   }
+*/
 }

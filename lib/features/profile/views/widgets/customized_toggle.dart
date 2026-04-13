@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../resources/app_colors.dart';
+import '../../../../core/resources/app_colors.dart';
 
 class LanguageSwitch extends StatefulWidget {
   const LanguageSwitch({super.key});

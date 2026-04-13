@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../core/customized_widgets/customized_text_field.dart';
-import '../../../core/resources/app_assets.dart';
+import '../../../../core/customized_widgets/customized_text_field.dart';
+import '../../../../core/resources/app_assets.dart';
+
+
 
 class UpdateProfileScreen extends StatelessWidget {
-  static final String routeName = "/updateProfile";
   const UpdateProfileScreen({super.key});
 
   @override

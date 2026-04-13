@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -8,10 +10,11 @@ import 'package:todo_nti5/core/resources/text_styles.dart';
 import 'package:todo_nti5/features/add_and_edit_task/views/widgets/customized_spinner.dart';
 import 'package:todo_nti5/features/add_and_edit_task/views/widgets/customized_update_button.dart';
 
+import '../../../../core/customized_widgets/customized_image.dart';
 import '../../../../core/customized_widgets/customized_text_field.dart';
 import '../../../../core/network/api_helper.dart';
 import '../../../../core/resources/app_colors.dart';
-import '../../../home/data/tasks_model.dart';
+import '../../../home/data/models/task_model.dart';
 import '../widgets/cutomized_date_picker_text_field.dart';
 import '../widgets/delete_dialog.dart';
 
@@ -28,6 +31,7 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
+  String? imagePath;
 
   @override
   void initState() {
@@ -54,7 +58,6 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
             InkWell(
               onTap: () {
                 showDeleteDialog(context, () {
-                  delete();
                 });
               },
               child: DeleteButton(),
@@ -67,28 +70,30 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
             child: Column(
               spacing: 10,
               children: [
-                Row(
-                  children: [
                     ClipRRect(
-                      borderRadius: BorderRadius.circular(40.r),
-                      child: Image.asset(
-                        AppImages.authImage,
-                        height: 80.h,
-                        width: 80.h,
-                        fit: BoxFit.cover,
+                      borderRadius: BorderRadius.circular(20.r),
+                      child: ImageManager(
+                          unselectedImageBuilder: Image.asset(AppImages.authImage,
+                            height: 207.h,
+                            width: 260.w,
+                            fit: BoxFit.cover,
+                          ),
+                          networkImageBuilder: Image.network(widget.task.imagePath??"",
+                            height: 207.h,
+                            width: 260.w,
+                            fit: BoxFit.cover,
+                          ),
+                          selectedImageBuilder: (String path){
+                            imagePath = path;
+                            return Image.file(
+                              File(path),
+                              height: 207.h,
+                              width: 260.w,
+                              fit: BoxFit.cover,
+                            );
+                          }
                       ),
                     ),
-                    SizedBox(width: 10.w),
-                    Expanded(
-                      child: Text(
-                        "In Progress Believe you can, and you're halfway there.",
-                        style: AppTextStyles.bodyMediumText(),
-                        maxLines: null,
-                        softWrap: true,
-                      ),
-                    ),
-                  ],
-                ),
                 CustomizedGroupSpinnerField(),
                 CustomizedTextField(
                   hintText: "Title",
@@ -118,7 +123,6 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
                 SizedBox(height: 10.h),
                 InkWell(
                   onTap: () {
-                    update();
                   },
                   child: CustomizedUpdateButton(),
                 ),
@@ -130,11 +134,12 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
     );
   }
 
-  void update() async {
+  /*void update() async {
     final result = await APIHelper.updateTask(
       taskId: widget.task.id.toString(),
       newTitle: _titleController.text,
       newDescription: _descriptionController.text,
+      imagePath: imagePath,
     );
     result.fold(
       (String error) {
@@ -185,5 +190,5 @@ class _EditTaskScreenState extends State<EditTaskScreen> {
         context.pop();
       },
     );
-  }
+  }*/
 }

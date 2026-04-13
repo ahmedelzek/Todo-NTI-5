@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:todo_nti5/core/customized_widgets/customized_button.dart';
 import 'package:todo_nti5/core/network/api_helper.dart';
 import 'package:todo_nti5/core/resources/app_assets.dart';
@@ -22,6 +25,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
+  XFile? image;
+
 
   final _formKey = GlobalKey<FormState>();
 
@@ -46,13 +51,29 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               children: [
                 SizedBox(height: 40.h),
                 Center(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20.r),
-                    child: Image.asset(
-                      AppImages.authImage,
-                      fit: BoxFit.cover,
-                      width: 261.w,
-                      height: 207.h,
+                  child: InkWell(
+                    onTap: pickImage,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20.r),
+                      child: Builder(
+                          builder: (context) {
+                            if(image == null){
+                              return Image.asset(AppImages.authImage,
+                                height: 207.h,
+                                width: 260.w,
+                                fit: BoxFit.cover,
+                              );
+                            }
+                            else{
+                              return Image.file(
+                                File(image!.path),
+                                height: 207.h,
+                                width: 260.w,
+                                fit: BoxFit.cover,
+                              );
+                            }
+                          }
+                      ),
                     ),
                   ),
                 ),
@@ -88,7 +109,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 SizedBox(height: 10.h),
                 InkWell(
                   onTap: () {
-                    add();
                   },
                   child: CustomizedButton(title: "Add Task"),
                 ),
@@ -100,6 +120,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     );
   }
 
+/*
   Future<void> add() async {
     if (_formKey.currentState?.validate() == true) {
       var result = await APIHelper.addTask(
@@ -129,5 +150,13 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         },
       );
     }
+  }
+*/
+
+  pickImage ()async{
+    final ImagePicker picker = ImagePicker();
+    image = await picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+    });
   }
 }

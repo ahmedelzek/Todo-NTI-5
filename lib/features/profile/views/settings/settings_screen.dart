@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../core/customized_widgets/customized_toggle.dart';
-import '../../../core/resources/text_styles.dart';
+
+import '../widgets/customized_toggle.dart';
+import '../../../../core/resources/text_styles.dart';
+
 
 class SettingsScreen extends StatelessWidget {
   static final String routeName = "/settings";

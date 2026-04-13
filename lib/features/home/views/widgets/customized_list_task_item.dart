@@ -5,10 +5,10 @@ import 'package:todo_nti5/core/resources/text_styles.dart';
 import '../../../../core/resources/app_colors.dart';
 
 class CustomizedListTaskItem extends StatelessWidget {
-  final String title;
-  final String description;
-  final String date;
-  final String time;
+  final String? title;
+  final String? description;
+  final String? date;
+  final String? time;
 
   const CustomizedListTaskItem({
     super.key,
@@ -45,7 +45,7 @@ class CustomizedListTaskItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: AppTextStyles.bodySmallLightText()),
+                Text("$title", style: AppTextStyles.bodySmallLightText()),
                 Text(
                   "$date\n$time",
                   textAlign: TextAlign.center,
@@ -55,7 +55,7 @@ class CustomizedListTaskItem extends StatelessWidget {
             ),
             Expanded(
               child: Text(
-                description,
+                "$description",
                 style: AppTextStyles.bodyMediumText(),
               ),
             ),

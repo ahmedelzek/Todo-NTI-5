@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:todo_nti5/core/resources/text_styles.dart';
 
-import '../resources/app_assets.dart';
-import '../resources/app_colors.dart';
+import '../../../../core/resources/app_assets.dart';
+import '../../../../core/resources/app_colors.dart';
 
 class CustomizedSettingCard extends StatelessWidget {
   final String? title;
