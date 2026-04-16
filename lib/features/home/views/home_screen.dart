@@ -21,96 +21,92 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: BlocProvider(
-        create: (context)=> HomeCubit()..getTasks(),
+        create: (context) => HomeCubit()..getTasks(),
         child: Scaffold(
-          body:Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.w),
-                    child: BlocBuilder<HomeCubit, HomeState>(
-                      builder: (context, state) {
-                        var cubit = HomeCubit.get(context);
+          body: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: BlocBuilder<HomeCubit, HomeState>(
+              builder: (context, state) {
+                var cubit = HomeCubit.get(context);
 
-                        if (state is HomeLoadingState) {
-                          return const Center(child: CircularProgressIndicator());
-                        }
+                if (state is HomeLoadingState) {
+                  return const Center(child: CircularProgressIndicator());
+                }
 
-                        if (state is HomeErrorState) {
-                          return Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  state.error,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(color: AppColors.red),
-                                ),
-                                SizedBox(height: 16.h),
-                                ElevatedButton(
-                                  onPressed: () => cubit.getTasks(),
-                                  child: const Text('Try Again'),
-                                ),
-                              ],
-                            ),
-                          );
-                        }
-                        return Column(
+                if (state is HomeErrorState) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          state.error,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: AppColors.red),
+                        ),
+                        SizedBox(height: 16.h),
+                        ElevatedButton(
+                          onPressed: () => cubit.getTasks(),
+                          child: const Text('Try Again'),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+                if (state is HomeSuccessState) {
+                  return Column(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          context.push(AppRouterKeys.profile);
+                        },
+                        child: Row(
                           children: [
-                            InkWell(
-                              onTap: () {
-                                context.push(AppRouterKeys.profile);
+                            HeaderProfile(userName: state.userModel.username??""),
+                            Spacer(),
+                            IconButton(
+                              onPressed: () {
+                                context.go(AppRouterKeys.login);
                               },
-                              child: Row(
-                                children: [
-                                  HeaderProfile(
-                                    userName: "User",
-                                  ),
-                                  Spacer(),
-                                  IconButton(
-                                    onPressed: () {
-                                      context.go(AppRouterKeys.login);
-                                    },
-                                    icon: Icon(
-                                      Icons.logout_outlined,
-                                      color: AppColors.red,
-                                    ),
-                                  ),
-                                ],
+                              icon: Icon(
+                                Icons.logout_outlined,
+                                color: AppColors.red,
                               ),
-                            ),
-                            Visibility(
-                              child: customizedTasksCounter(
-                                title: "Tasks",
-                                count: cubit.tasks.length,
-                              ),
-                            ),
-                            Expanded(
-                              child: ListView.builder(
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: 1.w,
-                                        ),
-                                        itemCount: cubit.tasks.length,
-                                        itemBuilder: (context, index) {
-                                          var task = cubit.tasks[index];
-                                          return InkWell(
-                                            onTap: () async {
-                                              await context.push(
-                                                AppRouterKeys.editTasks,
-                                              );
-                                            },
-                                            child: CustomizedListTaskItem(
-                                              title:task.title,
-                                              description: task.description,
-                                              date: extractDate(task.createdAt),
-                                              time: extractTime(task.createdAt),
-                                            ),
-                                          );
-                                        },
-                                      ),
                             ),
                           ],
-                        );
-                      },
-                    ),
-                  ),
+                        ),
+                      ), Visibility(
+                        child: customizedTasksCounter(
+                          title: "Tasks",
+                          count: state.tasks.length,
+                        ),
+                      ),
+                      Expanded(
+                        child: ListView.builder(
+                          padding: EdgeInsets.symmetric(horizontal: 1.w),
+                          itemCount: state.tasks.length,
+                          itemBuilder: (context, index) {
+                            var task = state.tasks[index];
+                            return InkWell(
+                              onTap: () async {
+                                await context.push(AppRouterKeys.editTasks);
+                              },
+                              child: CustomizedListTaskItem(
+                                title: task.title,
+                                description: task.description,
+                                date: extractDate(task.createdAt),
+                                time: extractTime(task.createdAt),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  );
+                }
+                return const SizedBox();
+              },
+            ),
+          ),
           floatingActionButton: FloatingActionButton(
             onPressed: () async {
               await context.push(AppRouterKeys.addTasks);

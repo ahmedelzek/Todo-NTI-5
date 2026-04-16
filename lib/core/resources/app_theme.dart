@@ -17,9 +17,17 @@ abstract class AppTheme{
         fontSize: 14,
         fontWeight: FontWeight.w200,
       ),
-      border: InputBorder.none,
-      enabledBorder: InputBorder.none,
-      focusedBorder: InputBorder.none,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(15),
+        borderSide: BorderSide(color: AppColors.grey, width: 1),
+      ),
+      enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: BorderSide(
+              color: AppColors.lightGrey,
+              width: 1
+          )
+      ),
     ),
   );
 }

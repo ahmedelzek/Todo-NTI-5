@@ -16,15 +16,13 @@ class CustomizedTextField extends StatefulWidget {
   final String? Function(String?)? validator;
   final Function()? onTap;
 
-
-
   const CustomizedTextField({
     super.key,
     required this.hintText,
     this.prefixIcon,
     this.controller,
     this.validator,
-    this.onTap ,
+    this.onTap,
     this.isPassword = false,
     this.isDescription = false,
     this.readOnly = false,
@@ -45,55 +43,47 @@ class _CustomizedTextFieldState extends State<CustomizedTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: 16.w,
-        vertical: widget.isDescription ? 8.h : 20.h,
-      ),
-      width: double.infinity,
-      height: widget.isDescription ? null : 63.h,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20.r),
-        color: AppColors.white,
-        border: Border.all(color: AppColors.lightGrey, width: 2.w),
-      ),
-      child: TextFormField(
-        obscureText: _obscureText,
-        controller: widget.controller,
-        validator: widget.validator,
-        readOnly: widget.readOnly,
-        onTap: widget.onTap,
-        minLines: 1,
-        maxLines: widget.isDescription ? null : 1,
-        keyboardType: TextInputType.multiline,
-        decoration: InputDecoration(
-          prefixIcon:
-              widget.prefixIcon != null
-                  ? SvgPicture.asset(
+    return TextFormField(
+      obscureText: _obscureText,
+      controller: widget.controller,
+      validator: widget.validator,
+      readOnly: widget.readOnly,
+      onTap: widget.onTap,
+      minLines: 1,
+      maxLines: widget.isDescription ? null : 1,
+      keyboardType: TextInputType.multiline,
+      decoration: InputDecoration(
+        prefixIcon:
+            widget.prefixIcon != null
+                ? Padding(
+              padding: EdgeInsets.all(8),
+                  child: SvgPicture.asset(
                     widget.prefixIcon!,
-                    width: 24.w,
-                    height: 24.h,
-                  )
-                  : null,
-          suffixIcon:
-              widget.isPassword
-                  ? GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _obscureText = !_obscureText;
-                      });
-                    },
+                  ),
+                )
+                : null,
+        suffixIcon:
+            widget.isPassword
+                ? InkWell(
+                  onTap: () {
+                    setState(() {
+                      _obscureText = !_obscureText;
+                    });
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.all(8),
                     child: SvgPicture.asset(
                       _obscureText ? AppIcons.lockIcon : AppIcons.unlockIcon,
-                      width: 24.w,
-                      height: 24.h,
                     ),
-                  )
-                  : null,
-          hintText: widget.hintText,
-        ),
-        style: AppTextStyles.bodyMediumText(),
+                  ),
+                )
+                : null,
+        hintText: widget.hintText,
+        filled: true,
+        fillColor: AppColors.white,
+        contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 18.h),
       ),
+      style: AppTextStyles.bodyMediumText(),
     );
   }
 }

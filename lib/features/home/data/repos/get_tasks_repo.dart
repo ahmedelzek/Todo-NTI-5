@@ -28,27 +28,3 @@ class GetTasksRepo {
     }
   }
 }
-
-//static Future<Either<String, List<TaskModel>>> getTasks() async {
-//     try {
-//       var registerResponse = await _dio.get('my_tasks',
-//           options: Options(headers: {
-//             'Authorization':
-//             'Bearer ${await CacheHelper.getValue(CacheKeys.accessToken)}'
-//           }));
-//       var tasksResponse = registerResponse.data as Map<String, dynamic>;
-//       List<TaskModel> tasks = [];
-//       for (var taskJson in tasksResponse['tasks']) {
-//         tasks.add(TaskModel.fromJson(taskJson));
-//       }
-//       return Right(tasks);
-//     } catch (e) {
-//       if (e is DioException) {
-//         var errorResponse = e.response?.data as Map<String, dynamic>;
-//         return Left(errorResponse['message'] ?? 'Unknown error');
-//       } else {
-//         print(e.toString());
-//         return Left('An Error occurred.\nTry again later');
-//       }
-//     }
-//   }

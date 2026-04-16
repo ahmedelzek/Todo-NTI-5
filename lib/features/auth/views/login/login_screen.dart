@@ -88,14 +88,10 @@ class LoginScreen extends StatelessWidget {
                         clickAble: state is! LoginLoading,
                       ),
                       SizedBox(height: 23.h),
-                      InkWell(
-                        onTap: () {
-                          context.push(AppRouterKeys.register);
-                        },
-                        child: CustomizedAuthText(
-                          prompt: "Don't have account?",
-                          title: "Register",
-                        ),
+                      CustomizedAuthText(
+                        prompt: "Don't have account?",
+                        title: "Register",
+                        onTap:()=>context.push(AppRouterKeys.register),
                       ),
                     ],
                   ),
