@@ -61,7 +61,10 @@ class HomeScreen extends StatelessWidget {
                         },
                         child: Row(
                           children: [
-                            HeaderProfile(userName: state.userModel.username??""),
+                            HeaderProfile(
+                              userName: state.userModel.username ?? "",
+                              imagePath: state.userModel.imagePath,
+                            ),
                             Spacer(),
                             IconButton(
                               onPressed: () {
@@ -74,7 +77,8 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                      ), Visibility(
+                      ),
+                      Visibility(
                         child: customizedTasksCounter(
                           title: "Tasks",
                           count: state.tasks.length,
@@ -107,20 +111,26 @@ class HomeScreen extends StatelessWidget {
               },
             ),
           ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () async {
-              await context.push(AppRouterKeys.addTasks);
+          floatingActionButton: Builder(
+            builder: (context) {
+              return FloatingActionButton(
+                onPressed: () async {
+                  final cubit = HomeCubit.get(context);
+                  await context.push(AppRouterKeys.addTasks);
+                  cubit.getTasks();
+                },
+                backgroundColor: AppColors.green,
+                child: SvgPicture.asset(
+                  AppIcons.addIcon,
+                  width: 24.w,
+                  height: 24.h,
+                  colorFilter: ColorFilter.mode(
+                    AppColors.transparentGreen,
+                    BlendMode.srcIn,
+                  ),
+                ),
+              );
             },
-            backgroundColor: AppColors.green,
-            child: SvgPicture.asset(
-              AppIcons.addIcon,
-              width: 24.w,
-              height: 24.h,
-              colorFilter: ColorFilter.mode(
-                AppColors.transparentGreen,
-                BlendMode.srcIn,
-              ),
-            ),
           ),
         ),
       ),

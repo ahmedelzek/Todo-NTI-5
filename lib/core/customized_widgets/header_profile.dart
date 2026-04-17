@@ -1,38 +1,42 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:io';
+
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:todo_nti5/core/resources/app_assets.dart';
-import 'package:todo_nti5/core/resources/app_colors.dart';
+import 'package:todo_nti5/core/customized_widgets/customized_image.dart';
 import 'package:todo_nti5/core/resources/text_styles.dart';
 
-class HeaderProfile extends StatelessWidget {
-  final String userName;
-  const HeaderProfile({super.key, required this.userName});
+class HeaderProfile extends StatefulWidget {
+  final String? userName;
+  final String? imagePath;
 
+  const HeaderProfile({super.key, required this.userName, this.imagePath});
+
+  @override
+  State<HeaderProfile> createState() => _HeaderProfileState();
+}
+
+class _HeaderProfileState extends State<HeaderProfile> {
+  String? imagePath;
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 20.h),
       child: Row(
         children: [
-          Container(
-            width: 50.w,
-            height: 50.h,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                image: AssetImage(AppImages.authImage),
-                fit: BoxFit.cover,
-              ),
+          ClipOval(
+            child: ImageManager(
+              unselectedImageBuilder: Icon(Icons.image, size: 50.r),
+              clickAble: false,
             ),
           ),
-          SizedBox(width: 16.w,),
+          SizedBox(width: 16.w),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Hello!", style: AppTextStyles.bodySmallLightText(),),
-              Text(userName, style: AppTextStyles.bodyMediumText(),)
+              Text("Hello!", style: AppTextStyles.bodySmallLightText()),
+              Text("${widget.userName}", style: AppTextStyles.bodyMediumText()),
             ],
-          )
+          ),
         ],
       ),
     );

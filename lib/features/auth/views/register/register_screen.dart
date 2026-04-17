@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,6 +10,7 @@ import 'package:todo_nti5/features/auth/cubit/register/register_cubit.dart';
 import 'package:todo_nti5/features/auth/cubit/register/register_state.dart';
 
 import '../../../../core/customized_widgets/customized_button.dart';
+import '../../../../core/customized_widgets/customized_image.dart';
 import '../../../../core/customized_widgets/customized_text_field.dart';
 import '../../../../core/resources/app_assets.dart';
 import '../../../../core/resources/app_colors.dart';
@@ -55,14 +58,16 @@ class RegisterScreen extends StatelessWidget {
                   key: cubit.formKey,
                   child: Column(
                     children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(20.r),
-                        child: Image.asset(
-                          AppImages.authImage,
-                          width: 375.w,
-                          height: 298.h,
-                          fit: BoxFit.cover,
-                        ),
+                      ImageManager(
+                          unselectedImageBuilder: Icon(Icons.image, size: 50,),
+                          onImageSelected: (path)=> cubit.imagePath = path,
+                          selectedImageBuilder: (String imagePath){
+                            return SizedBox(
+                                height: 100,
+                                width: 100,
+                                child: Image.file(File(imagePath), fit: BoxFit.contain,)
+                            );
+                          }
                       ),
                       SizedBox(height: 23.h),
                       CustomizedTextField(
@@ -97,10 +102,8 @@ class RegisterScreen extends StatelessWidget {
                         title: "Register",
                         clickAble: state is! RegisterLoadingState,
                         onTap: () async {
-                          if (cubit.formKey.currentState?.validate() == true) {
                             cubit.register();
                           }
-                        },
                       ),
                       SizedBox(height: 23.h),
                       CustomizedAuthText(
