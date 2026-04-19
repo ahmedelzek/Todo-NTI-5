@@ -28,9 +28,9 @@ class _SplashScreenState extends State<SplashScreen> {
       final isFirstTime = CacheHelper.getValue(CacheConstants.isFirstTime);
       final token = CacheHelper.getValue(CacheConstants.accessToken);
 
-      if (isFirstTime == null) {
+      if (isFirstTime == null || isFirstTime == true) {
         context.go(AppRouterKeys.welcome);
-      } else if (token == null) {
+      } else if (token == null || token.toString().isEmpty) {
         context.go(AppRouterKeys.login);
       } else {
         context.go(AppRouterKeys.home);

@@ -48,7 +48,7 @@ class WelcomeScreen extends StatelessWidget {
             SizedBox(height: 55.h),
             InkWell(
               onTap: () {
-                CacheHelper.setValue(CacheConstants.isFirstTime, true);
+                CacheHelper.setValue(CacheConstants.isFirstTime, false);
                 context.go(AppRouterKeys.login);
               },
               child: CustomizedButton(title: "Let's Start"),

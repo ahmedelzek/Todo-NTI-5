@@ -92,7 +92,8 @@ class HomeScreen extends StatelessWidget {
                             var task = state.tasks[index];
                             return InkWell(
                               onTap: () async {
-                                await context.push(AppRouterKeys.editTasks);
+                                await context.push(AppRouterKeys.editTasks, extra: state.tasks[index]);
+                                cubit.getTasks();
                               },
                               child: CustomizedListTaskItem(
                                 title: task.title,
